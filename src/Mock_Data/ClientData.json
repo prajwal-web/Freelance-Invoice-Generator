@@ -1,0 +1,23 @@
+[
+  {
+    "id": "c1",
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "phone": "+1 555-1234",
+    "address": "123 Main Street, New York, USA"
+  },
+  {
+    "id": "c2",
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "phone": "+44 20 7946 0123",
+    "address": "456 Baker Street, London, UK"
+  },
+  {
+    "id": "c3",
+    "name": "Rajesh Kumar",
+    "email": "rajesh.kumar@example.com",
+    "phone": "+91 98765 43210",
+    "address": "789 MG Road, Bangalore, India"
+  }
+]

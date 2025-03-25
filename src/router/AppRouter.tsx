@@ -1,13 +1,12 @@
 import { Route, Routes } from "react-router";
-import FirstPage from "../pages/FirstPage";
-import SecondPage from "../pages/SecondPage";
-
+import HomePage from "../components/pages/HomePage";
+import InvoicePage from "../components/pages/InvoicePage";
 const AppRouter = () => {
   return (
     <>
       <Routes>
-        <Route index element={<FirstPage />} />
-        <Route path="/second" element={<SecondPage />} />
+        <Route index element={<HomePage />} />
+        <Route path="/invoice" element={<InvoicePage />} />
       </Routes>
     </>
   );

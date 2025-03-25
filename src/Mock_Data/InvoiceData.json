@@ -1,0 +1,59 @@
+[
+  {
+    "id": "inv1",
+    "clientId": "c1",
+    "date": "2025-03-15",
+    "services": [
+      {
+        "description": "Website Development",
+        "rate": 1000,
+        "currency": "$",
+        "time": "2025-03-10"
+      }
+    ],
+    "payment": {
+      "isPaid": false,
+      "amountPaid": 500,
+      "totalAmount": 1000,
+      "remaining": 500
+    }
+  },
+  {
+    "id": "inv2",
+    "clientId": "c2",
+    "date": "2025-03-18",
+    "services": [
+      {
+        "description": "UI/UX Design",
+        "rate": 800,
+        "currency": "₹",
+        "time": "2025-03-12"
+      }
+    ],
+    "payment": {
+      "isPaid": true,
+      "amountPaid": 800,
+      "totalAmount": 800,
+      "remaining": 0
+    }
+  },
+  {
+    "id": "inv3",
+    "clientId": "c3",
+    "date": "2025-03-20",
+    "services": [
+      {
+        "description": "SEO Optimization",
+        "rate": 1200,
+        "currency": "$",
+        "time": "2025-03-18"
+      }
+    ],
+    "payment": {
+      "isPaid": false,
+      "amountPaid": 600,
+      "totalAmount": 1200,
+      "remaining": 600
+    }
+  }
+]
