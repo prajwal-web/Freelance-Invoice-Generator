@@ -29,7 +29,6 @@ export default function CustomizedSnackbars() {
     <div>
       <Snackbar open={snackBar} autoHideDuration={2000} onClose={handleClose}>
         <Alert
-          onClose={handleClose}
           severity="success"
           variant="filled"
           sx={{ width: "100%" }}

@@ -19,7 +19,7 @@ const SideBar = () => {
       >
         <Box
           sx={{
-            width: 200,
+            width: 250,
             bgcolor: "#d6e2fa",
             // position: "fixed",
             height: "100%",
