@@ -4,10 +4,10 @@ import InvoiceTable from "../core/InvoiceTable";
 const HomePage = () => {
   return (
     <>
-      <Box sx={{ marginTop: -2 }}>
+      <Box >
         <ClientTable />
       </Box>
-      <Box sx={{ marginTop: 1 }}>
+      <Box sx={{ marginTop: 3}}>
         <InvoiceTable />
       </Box>
     </>

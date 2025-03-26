@@ -11,33 +11,25 @@ import {
   Typography,
 } from "@mui/material";
 import { TableVirtuoso, TableComponents } from "react-virtuoso";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useAppSelector } from "../../redux/hooks";
-import { useDispatch } from "react-redux";
-import {
-  selectClients,
-  removeClient,
-  Client,
-} from "../../redux/slices/ClientSlice";
+import { selectInvoices } from "../../redux/slices/InvoiceSlice";
+import UpdateIcon from '@mui/icons-material/Update';
 
 const columns = [
-  { label: "ID", dataKey: "id" },
-  { label: "Name", dataKey: "name" },
-  { label: "Email", dataKey: "email" },
-  { label: "Phone", dataKey: "phone" },
-  { label: "Address", dataKey: "address" },
+  { label: "Invoice ID", dataKey: "invoiceId" },
+  { label: "Client ID", dataKey: "clientId" },
+  { label: "Description", dataKey: "services" },
+  { label: "Total Payment", dataKey: "totalPay" },
+  { label: "Remaining Payment", dataKey: "remainingPay" },
   { label: "Actions", dataKey: "actions" },
 ];
 
-const VirtuosoTableComponents: TableComponents<Client> = {
+const VirtuosoTableComponents: TableComponents<any> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
     <TableContainer component={Paper} {...props} ref={ref} />
   )),
   Table: (props) => (
-    <Table
-      {...props}
-      sx={{ borderCollapse: "separate", tableLayout: "fixed", minWidth: 700 }}
-    />
+    <Table {...props} sx={{ borderCollapse: "separate", tableLayout: "fixed", minWidth: 700 }} />
   ),
   TableHead: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
     <TableHead {...props} ref={ref} />
@@ -55,7 +47,7 @@ function fixedHeaderContent() {
         <TableCell
           key={column.dataKey}
           align="center"
-          sx={{ backgroundColor: "black", fontWeight: "bold" }}
+          sx={{ backgroundColor: "black", fontWeight: "bold", color: "white" }}
         >
           {column.label}
         </TableCell>
@@ -64,29 +56,32 @@ function fixedHeaderContent() {
   );
 }
 
-function ReactVirtualizedClientTable() {
-  const clients = useAppSelector(selectClients);
-  const dispatch = useDispatch();
+export default function VirtualizedInvoiceTable() {
+  const invoices = useAppSelector(selectInvoices);
 
-  const handleDelete = (id: string) => {
-    dispatch(removeClient(id));
-  };
+  const rows = invoices.map((invoice) => ({
+    invoiceId: invoice?.id || "N/A",
+    clientId: invoice?.clientId || "N/A",
+    totalPay: invoice?.payment?.totalAmount || 0,
+    remainingPay: invoice?.payment?.remaining || 0,
+    services: invoice?.services?.[0]?.description || "N/A",
+  }));
 
-  const rowContent = (_index: number, row: Client) => (
+  const rowContent = (_index: number, row: any) => (
     <>
-      <TableCell align="center">{row.id}</TableCell>
-      <TableCell align="center">{row.name}</TableCell>
-      <TableCell align="center">{row.email}</TableCell>
-      <TableCell align="center">{row.phone}</TableCell>
-      <TableCell align="center">{row.address}</TableCell>
+      <TableCell align="center">{row.invoiceId}</TableCell>
+      <TableCell align="center">{row.clientId}</TableCell>
+      <TableCell align="center">{row.services}</TableCell>
+      <TableCell align="center">{row.totalPay}</TableCell>
+      <TableCell align="center">{row.remainingPay}</TableCell>
       <TableCell align="center">
-        <Button
+      <Button
           variant="text"
           sx={{ color: "#38248f" }}
-          startIcon={<DeleteIcon />}
-          onClick={() => handleDelete(row.id)}
+          startIcon={<UpdateIcon />}
+          
         >
-          Delete
+          Update
         </Button>
       </TableCell>
     </>
@@ -97,9 +92,9 @@ function ReactVirtualizedClientTable() {
       <Typography variant="h5" gutterBottom>
         Invoices Table
       </Typography>
-      <Paper style={{ height: clients.length == 0 ? 120 : 276, width: "100%" }}>
+      <Paper style={{ height: rows.length === 0 ? 120 : 276, width: "100%" }}>
         <TableVirtuoso
-          data={clients}
+          data={rows}
           components={VirtuosoTableComponents}
           fixedHeaderContent={fixedHeaderContent}
           itemContent={rowContent}
@@ -108,5 +103,3 @@ function ReactVirtualizedClientTable() {
     </>
   );
 }
-
-export default ReactVirtualizedClientTable;
