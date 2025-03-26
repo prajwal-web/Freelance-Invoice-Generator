@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import snackbarReducer from "./slices/SnackbarSlice";
 import clientReducer from "./slices/ClientSlice";
-import invoiceReducer from "./slices/InvoiceSlice"
+import invoiceReducer from "./slices/InvoiceSlice";
 
 const store = configureStore({
   reducer: {
     snack: snackbarReducer,
     clients: clientReducer,
-    invoices:invoiceReducer
+    invoices: invoiceReducer,
   },
 });
 

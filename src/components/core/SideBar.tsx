@@ -5,7 +5,9 @@ import AddCardIcon from "@mui/icons-material/AddCard";
 import { Button } from "@mui/material";
 import BasicModal from "./BasicModal";
 import { useDispatch } from "react-redux";
-import { modalSlice } from "../../redux/slices/SnackbarSlice";
+import { modalSlice, toggleMode } from "../../redux/slices/SnackbarSlice";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ModeIcon from "@mui/icons-material/Mode";
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -20,11 +22,9 @@ const SideBar = () => {
         <Box
           sx={{
             width: 250,
-            bgcolor: "#d6e2fa",
-            // position: "fixed",
+            bgcolor: "background.default",
             height: "100%",
             paddingTop: 4,
-            boxShadow: "2px 0 5px rgba(0, 0, 0, 0.1)",
           }}
         >
           <Box sx={{ padding: 2 }}>
@@ -39,11 +39,42 @@ const SideBar = () => {
               }}
             >
               <Button
+                component={Link}
+                to="/"
+                variant="text"
+                color="inherit"
+                startIcon={<DashboardIcon />}
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "1rem",
+                  textTransform: "none",
+                }}
+              >
+                DashBoard
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: 3,
+                padding: "10px 0",
+                borderRadius: 2,
+                cursor: "pointer",
+              }}
+            >
+              <Button
                 variant="text"
                 color="inherit"
                 startIcon={<PersonAddIcon />}
-                sx={{ fontWeight: 500, fontSize: "1rem" }}
-                onClick={() => dispatch(modalSlice(true))}
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "1rem",
+                  color: "text.primary",
+                }}
+                onClick={() => {
+                  dispatch(modalSlice(true));
+                }}
               >
                 Add Clients
               </Button>
@@ -61,23 +92,47 @@ const SideBar = () => {
               }}
             >
               <Button
+                component={Link}
+                to="/invoice"
                 variant="text"
                 color="inherit"
-                sx={{ fontWeight: 500 }}
                 startIcon={<AddCardIcon />}
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "1rem",
+                  textTransform: "none",
+                }}
               >
-                <Link
-                  to="/invoice"
-                  style={{
-                    textDecoration: "none",
-                    fontWeight: "500",
-                    fontSize: "1rem",
-                    color: "black",
-                  }}
-                >
-                  Create Invoice
-                </Link>
+                Create Invoice
               </Button>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: 3,
+                padding: "10px 0",
+                borderRadius: 2,
+                cursor: "pointer",
+              }}
+            >
+              {/* <Tooltip title="change mode"> */}
+              <Button
+                variant="text"
+                color="inherit"
+                startIcon={<ModeIcon />}
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "1rem",
+                  color: "text.primary",
+                }}
+                onClick={() => {
+                  dispatch(toggleMode());
+                }}
+              >
+                Change Mode
+              </Button>
+              {/* </Tooltip> */}
             </Box>
           </Box>
         </Box>

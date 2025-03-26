@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
+import ClientData from "../.././Mock_Data/ClientData.json";
 
 export interface Client {
   id: string;
@@ -14,15 +15,15 @@ interface ClientState {
 }
 
 const initialState: ClientState = {
-  clients: [],
+  clients: ClientData,
 };
 
 const ClientSlice = createSlice({
   name: "clients",
   initialState,
   reducers: {
-    addClient: (state, action: PayloadAction<Client[]>) => {
-      state.clients = [...action.payload];
+    addClient: (state, action: PayloadAction<Client>) => {
+      state.clients = [...state.clients, action.payload];
     },
     removeClient: (state, action: PayloadAction<string>) => {
       state.clients = state.clients.filter(
@@ -33,7 +34,5 @@ const ClientSlice = createSlice({
 });
 
 export const { addClient, removeClient } = ClientSlice.actions;
-
 export const selectClients = (state: RootState) => state.clients.clients;
-
 export default ClientSlice.reducer;

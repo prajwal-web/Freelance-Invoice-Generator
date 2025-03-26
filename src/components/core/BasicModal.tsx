@@ -11,6 +11,7 @@ import {
   snackbar,
 } from "../../redux/slices/SnackbarSlice";
 import { useNavigate } from "react-router";
+import { addClient } from "../../redux/slices/ClientSlice";
 
 const modalStyle = {
   position: "absolute",
@@ -19,7 +20,7 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 550,
-  bgcolor: "#fff",
+  bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
 };
@@ -33,19 +34,29 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [id, setId] = useState("");
 
+  const newClient = {
+    id,
+    name,
+    email,
+    phone,
+    address,
+  };
   const handleSubmit = () => {
     console.log("Submitted Data:", { name, email, phone, address });
     dispatch(modalSlice(false));
+    dispatch(addClient(newClient));
     setName("");
     setEmail("");
     setPhone("");
     setAddress("");
+    setId("");
     dispatch(setSnackbarMessage("New clients are added..."));
     dispatch(snackbar(true));
     setTimeout(() => {
       navigate("/");
-    }, 2000);
+    }, 1000);
   };
 
   return (
@@ -60,6 +71,15 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
           Add Client
         </Typography>
 
+        <TextField
+          label="ID"
+          variant="standard"
+          fullWidth
+          sx={{ mt: 2 }}
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+          required
+        />
         <TextField
           label="Name"
           variant="standard"
