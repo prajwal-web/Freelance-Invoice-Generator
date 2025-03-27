@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import ClientData from "../.././Mock_Data/ClientData.json";
+import ClientMockData from "../.././Mock_Data/ClientData.json";
 
 export interface Client {
   id: string;
@@ -15,7 +15,7 @@ interface ClientState {
 }
 
 const initialState: ClientState = {
-  clients: ClientData,
+  clients: ClientMockData,
 };
 
 const ClientSlice = createSlice({

@@ -4,14 +4,15 @@ import * as React from "react";
 import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useAppSelector } from "../../redux/hooks";
-import { snackbar } from "../../redux/slices/SnackbarSlice";
+import { snackbar } from "../../redux/slices/ToggleSlice";
 import { RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
 
 export default function CustomizedSnackbars() {
   const dispatch = useDispatch();
+  const msgType = useAppSelector((state) => state.snack.snackToggle.msgType);
   const { snackBar, snackbarMessage } = useAppSelector(
-    (state: RootState) => state.snack
+    (state: RootState) => state.snack.snackToggle
   );
 
   const handleClose = (
@@ -30,7 +31,8 @@ export default function CustomizedSnackbars() {
       <Snackbar open={snackBar} autoHideDuration={2000} onClose={handleClose}>
         <Alert
           variant="filled"
-          sx={{ width: "100%", background: "green", color: "text.primary" }}
+          color={msgType}
+          sx={{ width: "100%", color: "text.primary" }}
         >
           {snackbarMessage}
         </Alert>

@@ -84,7 +84,9 @@ function ReactVirtualizedClientTable() {
           variant="text"
           sx={{ color: "#38248f" }}
           startIcon={<DeleteIcon />}
-          onClick={() => handleDelete(row.id)}
+          onClick={() => {
+            handleDelete(row.id);
+          }}
         >
           Delete
         </Button>

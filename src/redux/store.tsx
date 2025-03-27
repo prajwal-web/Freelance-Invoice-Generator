@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import snackbarReducer from "./slices/SnackbarSlice";
+import snackbarReducer from "./slices/ToggleSlice";
 import clientReducer from "./slices/ClientSlice";
 import invoiceReducer from "./slices/InvoiceSlice";
 

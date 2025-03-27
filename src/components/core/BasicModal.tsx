@@ -1,17 +1,16 @@
-import { useState } from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import { Box, Typography, Modal, Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router";
 import { RootState } from "../../redux/store";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { Button, TextField } from "@mui/material";
 import {
   modalSlice,
   setSnackbarMessage,
+  setSnackbarType,
   snackbar,
-} from "../../redux/slices/SnackbarSlice";
-import { useNavigate } from "react-router";
+} from "../../redux/slices/ToggleSlice";
 import { addClient } from "../../redux/slices/ClientSlice";
+import { Formik, Form } from "formik";
+import { ClientSchema } from "../../validation/ClientValidationForm";
 
 const modalStyle = {
   position: "absolute",
@@ -26,38 +25,10 @@ const modalStyle = {
 };
 
 const BasicModal = ({ onClose }: { onClose: () => void }) => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const isOpen = useAppSelector((state: RootState) => state.snack.modal);
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [id, setId] = useState("");
-
-  const newClient = {
-    id,
-    name,
-    email,
-    phone,
-    address,
-  };
-  const handleSubmit = () => {
-    console.log("Submitted Data:", { name, email, phone, address });
-    dispatch(modalSlice(false));
-    dispatch(addClient(newClient));
-    setName("");
-    setEmail("");
-    setPhone("");
-    setAddress("");
-    setId("");
-    dispatch(setSnackbarMessage("New clients are added..."));
-    dispatch(snackbar(true));
-    setTimeout(() => {
-      navigate("/");
-    }, 1000);
-  };
+  const clients = useAppSelector((state) => state.clients.clients);
 
   return (
     <Modal
@@ -71,71 +42,131 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
           Add Client
         </Typography>
 
-        <TextField
-          label="ID"
-          variant="standard"
-          fullWidth
-          sx={{ mt: 2 }}
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-          required
-        />
-        <TextField
-          label="Name"
-          variant="standard"
-          fullWidth
-          sx={{ mt: 2 }}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-
-        <TextField
-          label="Email"
-          variant="standard"
-          fullWidth
-          sx={{ mt: 2 }}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-
-        <TextField
-          label="Phone"
-          variant="standard"
-          fullWidth
-          sx={{ mt: 2 }}
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          required
-        />
-
-        <TextField
-          label="Address"
-          variant="standard"
-          fullWidth
-          sx={{ mt: 2 }}
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          required
-        />
-
-        <Button
-          variant="contained"
-          color="success"
-          sx={{ mt: 2 }}
-          onClick={handleSubmit}
+        <Formik
+          initialValues={{
+            id: "",
+            name: "",
+            email: "",
+            phone: "",
+            address: "",
+          }}
+          validationSchema={ClientSchema}
+          onSubmit={(values, { resetForm }) => {
+            console.log(values);
+            const exists = clients.find(
+              (client) =>
+                client.id === values.id || client.email === values.email
+            );
+            if (exists) {
+              dispatch(modalSlice(false));
+              dispatch(setSnackbarType("error"));
+              dispatch(
+                setSnackbarMessage(
+                  "Client with this ID or Email already exists!"
+                )
+              );
+              dispatch(snackbar(true));
+              resetForm();
+              return;
+            }
+            dispatch(addClient(values));
+            dispatch(modalSlice(false));
+            dispatch(setSnackbarMessage("New clients are added..."));
+            dispatch(snackbar(true));
+            dispatch(setSnackbarType("success"));
+            resetForm();
+            setTimeout(() => {
+              navigate("/");
+            }, 1000);
+          }}
         >
-          Submit
-        </Button>
-        <Button
-          variant="text"
-          color="inherit"
-          sx={{ position: "absolute", top: 10, right: 4, fontSize: "1.5rem" }}
-          onClick={() => onClose()}
-        >
-          X
-        </Button>
+          {({ errors, touched, handleChange, values }) => (
+            <Form>
+              <TextField
+                label="ID"
+                name="id"
+                variant="standard"
+                fullWidth
+                sx={{ mt: 2 }}
+                value={values.id}
+                onChange={handleChange}
+                error={touched.id && Boolean(errors.id)}
+                helperText={touched.id && errors.id}
+              />
+
+              <TextField
+                label="Name"
+                name="name"
+                variant="standard"
+                fullWidth
+                sx={{ mt: 2 }}
+                value={values.name}
+                onChange={handleChange}
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name && errors.name}
+              />
+
+              <TextField
+                label="Email"
+                name="email"
+                variant="standard"
+                fullWidth
+                sx={{ mt: 2 }}
+                value={values.email}
+                onChange={handleChange}
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email && errors.email}
+              />
+
+              <TextField
+                label="Phone"
+                name="phone"
+                variant="standard"
+                fullWidth
+                sx={{ mt: 2 }}
+                value={values.phone}
+                onChange={handleChange}
+                error={touched.phone && Boolean(errors.phone)}
+                helperText={touched.phone && errors.phone}
+              />
+
+              <TextField
+                label="Address"
+                name="address"
+                variant="standard"
+                fullWidth
+                sx={{ mt: 2 }}
+                value={values.address}
+                onChange={handleChange}
+                error={touched.address && Boolean(errors.address)}
+                helperText={touched.address && errors.address}
+              />
+
+              <Button
+                variant="contained"
+                color="success"
+                type="submit"
+                sx={{ mt: 2 }}
+              >
+                Submit
+              </Button>
+
+              <Button
+                variant="text"
+                color="inherit"
+                sx={{
+                  position: "absolute",
+                  top: 10,
+                  right: 4,
+                  fontSize: "1.5rem",
+                }}
+                onClick={onClose}
+              >
+                X
+              </Button>
+            </Form>
+          )}
+        </Formik>
       </Box>
     </Modal>
   );

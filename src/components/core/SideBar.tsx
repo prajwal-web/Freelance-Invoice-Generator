@@ -5,7 +5,7 @@ import AddCardIcon from "@mui/icons-material/AddCard";
 import { Button } from "@mui/material";
 import BasicModal from "./BasicModal";
 import { useDispatch } from "react-redux";
-import { modalSlice, toggleMode } from "../../redux/slices/SnackbarSlice";
+import { modalSlice, toggleMode } from "../../redux/slices/ToggleSlice";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ModeIcon from "@mui/icons-material/Mode";
 

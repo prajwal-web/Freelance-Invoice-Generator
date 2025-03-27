@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import {
   Table,
@@ -13,14 +14,15 @@ import {
 import { TableVirtuoso, TableComponents } from "react-virtuoso";
 import { useAppSelector } from "../../redux/hooks";
 import { selectInvoices } from "../../redux/slices/InvoiceSlice";
-import UpdateIcon from '@mui/icons-material/Update';
+import UpdateIcon from "@mui/icons-material/Update";
 
 const columns = [
   { label: "Invoice ID", dataKey: "invoiceId" },
   { label: "Client ID", dataKey: "clientId" },
   { label: "Description", dataKey: "services" },
-  { label: "Total Payment", dataKey: "totalPay" },
-  { label: "Remaining Payment", dataKey: "remainingPay" },
+  { label: "Total Amount", dataKey: "totalAmt" },
+  { label: "Amount Paid", dataKey: "Amountpaid" },
+  { label: "Rem Payment", dataKey: "remainingPay" },
   { label: "Actions", dataKey: "actions" },
 ];
 
@@ -29,7 +31,10 @@ const VirtuosoTableComponents: TableComponents<any> = {
     <TableContainer component={Paper} {...props} ref={ref} />
   )),
   Table: (props) => (
-    <Table {...props} sx={{ borderCollapse: "separate", tableLayout: "fixed", minWidth: 700 }} />
+    <Table
+      {...props}
+      sx={{ borderCollapse: "separate", tableLayout: "fixed", minWidth: 700 }}
+    />
   ),
   TableHead: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
     <TableHead {...props} ref={ref} />
@@ -62,7 +67,9 @@ export default function VirtualizedInvoiceTable() {
   const rows = invoices.map((invoice) => ({
     invoiceId: invoice?.id || "N/A",
     clientId: invoice?.clientId || "N/A",
-    totalPay: invoice?.payment?.totalAmount || 0,
+    currency: invoice?.services?.[0].currency,
+    totalAmount: invoice?.payment?.totalAmount || 0,
+    amountPaid: invoice?.payment?.amountPaid || 0,
     remainingPay: invoice?.payment?.remaining || 0,
     services: invoice?.services?.[0]?.description || "N/A",
   }));
@@ -72,14 +79,20 @@ export default function VirtualizedInvoiceTable() {
       <TableCell align="center">{row.invoiceId}</TableCell>
       <TableCell align="center">{row.clientId}</TableCell>
       <TableCell align="center">{row.services}</TableCell>
-      <TableCell align="center">{row.totalPay}</TableCell>
-      <TableCell align="center">{row.remainingPay}</TableCell>
       <TableCell align="center">
-      <Button
+        {row.currency} {row.totalAmount}
+      </TableCell>
+      <TableCell align="center">
+        {row.currency} {row.amountPaid}
+      </TableCell>
+      <TableCell align="center">
+        {row.currency} {row.remainingPay}
+      </TableCell>
+      <TableCell align="center">
+        <Button
           variant="text"
           sx={{ color: "#38248f" }}
           startIcon={<UpdateIcon />}
-          
         >
           Update
         </Button>

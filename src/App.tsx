@@ -15,6 +15,7 @@ const AppContent = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <CustomizedSnackbars />
+
       <Box
         sx={{
           width: "100%",
@@ -35,6 +36,28 @@ const AppContent = () => {
             padding: 2,
           }}
         >
+          {/* <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+            component={Link}
+            to="/"
+          >
+            <Box
+              component="img"
+              sx={{
+                height: 100,
+                width: 100,
+                borderRadius: "50%",
+              }}
+              alt="The house from the offer."
+              src="https://th.bing.com/th/id/OIP.efhBSCiCBLDMMbjffcojpQHaGr?rs=1&pid=ImgDetMain"
+            />
+          </Box> */}
+
           <AppRouter />
         </Box>
       </Box>

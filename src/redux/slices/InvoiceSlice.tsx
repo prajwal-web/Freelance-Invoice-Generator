@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import invoiceData from "../../Mock_Data/InvoiceData.json"
+import invoiceData from "../../Mock_Data/InvoiceData.json";
+
 type Service = {
   description: string;
   rate: number;
   time: string;
-  currency: "$" | "₹";
+  currency: string;
 };
 
 type Payment = {
@@ -23,7 +24,7 @@ type Invoice = {
   payment?: Payment;
 };
 
-const initialState: Invoice[] =invoiceData ;
+const initialState: Invoice[] = invoiceData;
 
 export const invoiceSlice = createSlice({
   name: "invoices",

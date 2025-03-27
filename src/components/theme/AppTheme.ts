@@ -12,8 +12,8 @@ export const AppTheme = (mode: "light" | "dark"): Theme =>
         main: "#77d92b",
       },
       background: {
-        default: mode === "dark" ? "#b04747" : "black",
-        paper: mode === "dark" ? "#247b7e" : "#262626",
+        default: mode === "dark" ? "#1b2e2b" : "black",
+        paper: mode === "dark" ? "#1a6767" : "#262626",
       },
       text: {
         primary: mode === "dark" ? "#fff" : "#fff",
@@ -23,9 +23,8 @@ export const AppTheme = (mode: "light" | "dark"): Theme =>
     typography: {
       fontFamily: '"Roboto", sans-serif',
       h1: {
-        fontSize: "2.5rem",
-        fontFamily: "cursive",
-        fontWeight: 700,
+        fontSize: "4rem",
+        fontWeight: 400,
         letterSpacing: "-0.5px",
       },
       h5: {
