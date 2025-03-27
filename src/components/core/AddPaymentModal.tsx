@@ -21,7 +21,7 @@ const style = {
   p: 4,
 };
 
-export default function AddServicesModal() {
+export default function AddPaymentModal() {
   const isOpen = useAppSelector(
     (state) => state.snack.invoiceDetails.invoiceServiceModal
   );

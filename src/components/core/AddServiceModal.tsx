@@ -8,6 +8,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { useDispatch } from "react-redux";
 import { invoicePayModal } from "../../redux/slices/ToggleSlice";
 import AddIcon from "@mui/icons-material/Add";
+import AddPaymentModal from "./AddPaymentModal";
 
 const style = {
   position: "absolute",
@@ -23,7 +24,7 @@ const style = {
   p: 4,
 };
 
-export default function AddPaymentModal() {
+export default function AddServiceModal() {
   const currency = ["EUR", "INR", "USD"];
   const clients = useAppSelector((state) => state.clients.clients);
   const isOpen = useAppSelector(

@@ -14,7 +14,9 @@
 // import { useState } from "react";
 // import { useAppSelector } from "../../redux/hooks";
 
-// import AddPaymentModal from "../core/AddServiceModal";
+// import AddServicesModal from "../core/AddPaymentModal";
+
+import AddPaymentModal from "../core/AddServiceModal";
 
 // const modalStyle = {
 //   position: "absolute",
@@ -291,8 +293,8 @@
 const InvoicePage = () => {
   return (
     <>
-      {/* <AddPaymentModal /> */}
-      <h1>hi abhi</h1>
+      <AddPaymentModal />
+      {/* <AddServicesModal /> */}
     </>
   );
 };
