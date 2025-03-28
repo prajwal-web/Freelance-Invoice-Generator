@@ -2,40 +2,20 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
 import { MenuItem, TextField, Tooltip } from "@mui/material";
 import { useAppSelector } from "../../redux/hooks";
-import { useDispatch } from "react-redux";
-import { invoicePayModal } from "../../redux/slices/ToggleSlice";
 import AddIcon from "@mui/icons-material/Add";
 import AddPaymentModal from "./AddPaymentModal";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "59%",
-  transform: "translate(-50%, -50%)",
-  width: 650,
-  //   bgcolor: "#FFFECE",
-  bgcolor: "background.paper",
-  color: "black",
-  border: "1px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { useState } from "react";
+import { Formik, Form } from "formik";
+import { ServiceSchema } from "../../validation/InvoiceValidationForm";
 
 export default function AddServiceModal() {
-  const currency = ["EUR", "INR", "USD"];
+  const currency = ["₹ (INR)", "$ (USD)", "€ (Euro)"];
   const clients = useAppSelector((state) => state.clients.clients);
-  const isOpen = useAppSelector(
-    (state) => state.snack.invoiceDetails.invoicePaymentModal
-  );
   const [selectedClient, setSelectedClient] = React.useState("");
-  const dispatch = useDispatch();
-
-  const handleClose = () => {
-    dispatch(invoicePayModal(false));
-  };
+  const [showServiceFields, setShowServiceFields] = useState(false);
+  const [serviceAdded, setServiceAdded] = useState(false);
 
   return (
     <>
@@ -43,7 +23,7 @@ export default function AddServiceModal() {
         p={4}
         maxWidth={700}
         mx="auto"
-        sx={{ borderRadius: 2, background: "backround.paper " }}
+        sx={{ borderRadius: 2, background: "background.paper" }}
       >
         <Typography variant="h5" mb={2}>
           Create Invoice
@@ -58,99 +38,148 @@ export default function AddServiceModal() {
           sx={{ mb: 3 }}
         >
           {clients.map((client) => (
-            <MenuItem
-              key={client.id}
-              value={client.id}
-              sx={{ background: "#006d40" }}
-            >
+            <MenuItem key={client.id} value={client.id}>
               {client.id}
             </MenuItem>
           ))}
         </TextField>
-        <Typography variant="h6" mt={2} gutterBottom>
+
+        <Typography variant="h5" mt={2} gutterBottom>
           Add Services
         </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "65px",
-            border: "dashed 1px black",
-            borderRadius: "20px",
-          }}
-        >
-          <Button
-            onClick={() => dispatch(invoicePayModal(true))}
-            sx={{ mb: 2 }}
+
+        {!showServiceFields && !serviceAdded && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "65px",
+              border: "dashed 1px black",
+              borderRadius: "20px",
+              cursor: "pointer",
+              mb: 2,
+            }}
+            onClick={() => setShowServiceFields(true)}
           >
             <Tooltip title="Add Services">
-              <AddIcon sx={{ fontSize: 50 }} />
+              <AddIcon sx={{ fontSize: 50, color: "text.primary" }} />
             </Tooltip>
-          </Button>
-        </Box>
+          </Box>
+        )}
 
-        <Typography variant="h6" mt={2} gutterBottom>
+        {showServiceFields && (
+          <Formik
+            initialValues={{
+              service: "",
+              rate: "",
+              currency: "",
+              date: "",
+            }}
+            validationSchema={ServiceSchema}
+            onSubmit={(values) => {
+              console.log("Service Details:", values);
+              setShowServiceFields(false);
+              setServiceAdded(true);
+            }}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleReset,
+              // setFieldValue,
+            }) => (
+              <Form>
+                <TextField
+                  label="Service"
+                  name="service"
+                  variant="standard"
+                  fullWidth
+                  sx={{ mt: 2 }}
+                  value={values.service}
+                  onChange={handleChange}
+                  error={touched.service && Boolean(errors.service)}
+                  helperText={touched.service && errors.service}
+                />
+
+                <TextField
+                  label="Rate"
+                  name="rate"
+                  fullWidth
+                  variant="standard"
+                  sx={{ mt: 2 }}
+                  value={values.rate}
+                  onChange={handleChange}
+                  error={touched.rate && Boolean(errors.rate)}
+                  helperText={touched.rate && errors.rate}
+                />
+
+                <Box
+                  sx={{
+                    marginTop: 3,
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 6,
+                  }}
+                >
+                  <TextField
+                    select
+                    sx={{ width: 200 }}
+                    label="Currency"
+                    name="currency"
+                    value={values.currency}
+                    onChange={handleChange}
+                    error={touched.currency && Boolean(errors.currency)}
+                    helperText={touched.currency && errors.currency}
+                  >
+                    {currency.map((cur, index) => (
+                      <MenuItem key={index} value={cur}>
+                        {cur}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+
+                  <TextField
+                    type="date"
+                    name="date"
+                    label="Date"
+                    sx={{ width: 500 }}
+                    InputLabelProps={{ shrink: true }}
+                    value={values.date}
+                    onChange={handleChange}
+                    error={touched.date && Boolean(errors.date)}
+                    helperText={touched.date && errors.date}
+                  />
+                </Box>
+
+                <Box mt={3} display="flex" gap={4} justifyContent="right">
+                  <Button
+                    type="button"
+                    color="error"
+                    variant="contained"
+                    onClick={() => {
+                      handleReset();
+                      setShowServiceFields(false);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" variant="contained" color="success">
+                    Save
+                  </Button>
+                </Box>
+              </Form>
+            )}
+          </Formik>
+        )}
+
+        <Typography variant="h5" mt={4} gutterBottom>
           Add Payment
         </Typography>
         <AddPaymentModal />
       </Box>
-
-      <Modal
-        open={isOpen}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography variant="h5" gutterBottom>
-            Add Services
-          </Typography>
-          <TextField
-            label="Service"
-            name="service"
-            variant="standard"
-            fullWidth
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Rate"
-            fullWidth
-            name="rate"
-            variant="standard"
-            sx={{ mt: 2 }}
-          />
-          <Box
-            sx={{ marginTop: 3, display: "flex", flexDirection: "row", gap: 6 }}
-          >
-            <TextField
-              select
-              sx={{ width: 200 }}
-              label="Currency"
-              name="currency"
-            >
-              {currency.map((cur, index) => (
-                <MenuItem key={index} value={cur}>
-                  {cur}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField fullWidth type="date" name="date" sx={{ width: 300 }} />
-          </Box>
-          <Box mt={3} display="flex" gap={4} justifyContent="right">
-            <Button
-              onClick={() => dispatch(invoicePayModal(false))}
-              color="error"
-              variant="contained"
-            >
-              Cancel
-            </Button>
-            <Button variant="contained" color="success">
-              Save
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
     </>
   );
 }

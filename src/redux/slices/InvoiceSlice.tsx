@@ -24,19 +24,27 @@ type Invoice = {
   payment?: Payment;
 };
 
-const initialState: Invoice[] = invoiceData;
+export interface InvoiceState {
+  invoice: Invoice[];
+}
+
+const initialState: InvoiceState = {
+  invoice: invoiceData,
+};
 
 export const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
-    addInvoices: (_state, action: PayloadAction<Invoice[]>) => {
-      return action.payload;
+    addInvoice: (state, action: PayloadAction<Invoice>) => {
+      state.invoice = [...state.invoice, action.payload];
     },
   },
 });
 
-export const { addInvoices } = invoiceSlice.actions;
+export const { addInvoice } = invoiceSlice.actions;
+
 export const selectInvoices = (state: RootState) => state.invoices;
+export const selectInvoiceList = (state: RootState) => state.invoices.invoice;
 
 export default invoiceSlice.reducer;

@@ -38,7 +38,7 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={modalStyle}>
-        <Typography variant="h6" id="modal-modal-title">
+        <Typography variant="h5" id="modal-modal-title">
           Add Client
         </Typography>
 
@@ -71,7 +71,9 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
             }
             dispatch(addClient(values));
             dispatch(modalSlice(false));
-            dispatch(setSnackbarMessage("New clients are added..."));
+            dispatch(
+              setSnackbarMessage(` Glad to have you with us, ${values.name}!`)
+            );
             dispatch(snackbar(true));
             dispatch(setSnackbarType("success"));
             resetForm();
