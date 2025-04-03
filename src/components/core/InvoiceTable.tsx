@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -19,32 +18,43 @@ import {
 } from "@mui/material";
 import { useAppSelector } from "../../redux/hooks";
 import { selectInvoices } from "../../redux/slices/InvoiceSlice";
-import UpdateIcon from "@mui/icons-material/Update";
-import { useNavigate } from "react-router";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import React from "react";
+import PdfModal from "./PdfModal";
+import { useDispatch } from "react-redux";
+import { pdfModal } from "../../redux/slices/ToggleSlice";
 
 export default function InvoiceTable() {
+  const dispatch = useDispatch();
+
+  const handleClose = () => {
+    dispatch(pdfModal(false));
+  };
   const invoices = useAppSelector(selectInvoices);
-  const navigate = useNavigate();
+  console.log("invoices ", invoices);
 
   const data = React.useMemo(
     () =>
       invoices.invoice.map((invoice: any) => ({
-        invoiceId: invoice?.id || "N/A",
+        invoiceId: invoice?.id || `inv-${Math.floor(Math.random() * 100)}`,
         clientId: invoice?.clientId || "N/A",
         currency: invoice?.services?.[0]?.currency || "N/A",
         totalAmount: invoice?.payment?.totalAmount || 0,
         amountPaid: invoice?.payment?.amountPaid || 0,
         remainingPay: invoice?.payment?.remaining || 0,
-        services: invoice?.services?.[0]?.description || "N/A",
+        services:
+          invoice?.services
+            ?.map((service: any) => service.description)
+            .join(", ") || "N/A",
       })),
-    [invoices]
+    [invoices.invoice]
   );
 
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       { header: "Invoice ID", accessorKey: "invoiceId" },
       { header: "Client ID", accessorKey: "clientId" },
-      { header: "Description", accessorKey: "services" },
+      { header: "Services", accessorKey: "services" },
       {
         header: "Total Amount",
         accessorKey: "totalAmount",
@@ -56,7 +66,7 @@ export default function InvoiceTable() {
         cell: (info) => `${info.row.original.currency} ${info.getValue()}`,
       },
       {
-        header: "Rem Payment",
+        header: "Remaining Payment",
         accessorKey: "remainingPay",
         cell: (info) => `${info.row.original.currency} ${info.getValue()}`,
       },
@@ -67,10 +77,9 @@ export default function InvoiceTable() {
           <Button
             variant="text"
             sx={{ color: "#38248f" }}
-            startIcon={<UpdateIcon />}
-            onClick={() => navigate("/invoice")}
+            onClick={() => dispatch(pdfModal(true))}
           >
-            Update
+            <FullscreenIcon />
           </Button>
         ),
       },
@@ -139,6 +148,7 @@ export default function InvoiceTable() {
           </Table>
         </TableContainer>
       </Paper>
+      <PdfModal handleClose={handleClose} />
     </>
   );
 }

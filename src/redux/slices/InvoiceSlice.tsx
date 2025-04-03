@@ -10,15 +10,13 @@ export type Service = {
 };
 
 type Payment = {
-  isPaid: boolean;
   amountPaid: number;
   totalAmount: number;
   remaining: number;
 };
 
 type Invoice = {
-  id?: string;
-  clientId?: string;
+  clientId: string;
   date?: string;
   services?: Service[];
   payment?: Payment;
@@ -29,7 +27,10 @@ export interface InvoiceState {
 }
 
 const initialState: InvoiceState = {
-  invoice: invoiceData || [],
+  invoice: invoiceData.map((inv: Invoice) => ({
+    ...inv,
+    services: Array.isArray(inv.services) ? inv.services : [],
+  })),
 };
 
 export const invoiceSlice = createSlice({
@@ -37,97 +38,46 @@ export const invoiceSlice = createSlice({
   initialState,
   reducers: {
     addInvoice: (state, action: PayloadAction<Invoice>) => {
-      state.invoice = [...state.invoice, action.payload];
+      state.invoice.push(action.payload);
     },
-    updateInvoice: (state, action: PayloadAction<Invoice>) => {
-      const index = state.invoice.findIndex(
-        (inv) => inv.id === action.payload.id
+    addService: (
+      state,
+      action: PayloadAction<{ clientId: string; service: Service }>
+    ) => {
+      const invoice = state.invoice.find(
+        (inv) => inv.clientId === action.payload.clientId
       );
-      if (index !== -1) {
-        state.invoice[index] = action.payload;
+      if (invoice) {
+        invoice.services = [
+          ...(invoice.services || []),
+          action.payload.service,
+        ];
+      }
+    },
+    addPayment: (
+      state,
+      action: PayloadAction<{ clientId: string; payment: Payment }>
+    ) => {
+      let invoice = state.invoice.find(
+        (inv) => inv.clientId === action.payload.clientId
+      );
+
+      if (invoice) {
+        invoice.payment = action.payload.payment;
+      } else {
+        invoice = {
+          clientId: action.payload.clientId,
+          payment: action.payload.payment,
+        };
+        state.invoice.push(invoice);
       }
     },
   },
 });
 
-export const { addInvoice, updateInvoice } = invoiceSlice.actions;
+export const { addInvoice, addService, addPayment } = invoiceSlice.actions;
 
 export const selectInvoices = (state: RootState) => state.invoices;
 export const selectInvoiceList = (state: RootState) => state.invoices.invoice;
 
 export default invoiceSlice.reducer;
-
-// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import type { RootState } from "../AppStrore";
-
-// type Service = {
-//   description: string;
-//   rate: number;
-//   time: string;
-//   currency: string;
-// };
-
-// type TPayLoad = {
-//   id: string;
-//   services: Service[];
-// };
-
-// type Payment = {
-//   isPaid: boolean;
-//   amountPaid: number;
-//   totalAmount: number;
-//   remaining: number;
-// };
-
-// type TAddPayment = {
-//   id: string;
-//   valDispatch: Payment;
-// };
-
-// type Invoice = {
-//   id?: string;
-//   clientId?: string;
-//   date?: string;
-//   payment?: Payment;
-//   services?: Service[];
-// };
-
-// const initialState: Invoice[] | [] = [];
-
-// export const invoiceSlice = createSlice({
-//   name: "invoices",
-//   initialState,
-//   reducers: {
-//     addInvoices: (state, action: PayloadAction<Invoice[]>) => {
-//       return (state = [...action.payload]);
-//     },
-
-//     addNewInvoice: (state, action: PayloadAction<Invoice[]>) => {
-//       return (state = [...state, ...action.payload]);
-//     },
-
-//     addNewService: (state, action: PayloadAction<TPayLoad>) => {
-//       state.map((invoice) => {
-//         if (invoice.clientId === action.payload.id) {
-//           invoice.services = [...invoice.services, ...action.payload.services];
-//         }
-//       });
-//     },
-
-//     addAmount: (state, action: PayloadAction<TAddPayment>) => {
-//       state.map((invoice) => {
-//         if (invoice.clientId === action.payload.id) {
-//           invoice.payment = action.payload.valDispatch;
-//         }
-//       });
-//     },
-//   },
-// });
-
-// export const { addInvoices, addNewService, addNewInvoice, addAmount } =
-//   invoiceSlice.actions;
-
-// // Other code such as selectors can use the imported `RootState` type
-// export const selectInvoices = (state: RootState) => state.invoices;
-
-// export default invoiceSlice.reducer;

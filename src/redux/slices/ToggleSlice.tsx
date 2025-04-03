@@ -10,11 +10,8 @@ export interface AppUIState {
     msgType: string;
   };
   modal: boolean;
+  pdfModal: boolean;
   themeMode: "light" | "dark";
-  invoiceDetails: {
-    invoicePaymentModal: boolean;
-    invoiceServiceModal: boolean;
-  };
 }
 
 const initialState: AppUIState = {
@@ -23,12 +20,9 @@ const initialState: AppUIState = {
     snackBar: false,
     msgType: "",
   },
+  pdfModal: false,
   modal: false,
   themeMode: "dark",
-  invoiceDetails: {
-    invoicePaymentModal: false,
-    invoiceServiceModal: false,
-  },
 };
 
 export const ToggleSlice = createSlice({
@@ -50,11 +44,8 @@ export const ToggleSlice = createSlice({
     toggleMode: (state) => {
       state.themeMode = state.themeMode === "light" ? "dark" : "light";
     },
-    invoicePayModal: (state, action: PayloadAction<boolean>) => {
-      state.invoiceDetails.invoicePaymentModal = action.payload;
-    },
-    invoiceServiceModal: (state, action: PayloadAction<boolean>) => {
-      state.invoiceDetails.invoiceServiceModal = action.payload;
+    pdfModal: (state, action: PayloadAction<boolean>) => {
+      state.pdfModal = action.payload;
     },
   },
 });
@@ -64,8 +55,7 @@ export const {
   modalSlice,
   toggleMode,
   setSnackbarType,
-  invoicePayModal,
-  invoiceServiceModal,
+  pdfModal,
 } = ToggleSlice.actions;
 
 export const selectThemeMode = (state: RootState) => state.snack.themeMode;

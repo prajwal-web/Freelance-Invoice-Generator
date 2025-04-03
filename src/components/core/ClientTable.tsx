@@ -89,10 +89,9 @@ function ClientTable() {
           <Button
             variant="text"
             sx={{ color: "#38248f" }}
-            startIcon={<DeleteIcon />}
             onClick={() => handleOpenDialog(row.original.id)}
           >
-            Delete
+            <DeleteIcon />
           </Button>
         ),
       },
