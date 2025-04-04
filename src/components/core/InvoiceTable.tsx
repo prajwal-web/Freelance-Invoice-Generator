@@ -84,7 +84,7 @@ export default function InvoiceTable() {
         ),
       },
     ],
-    []
+    [dispatch]
   );
 
   const table = useReactTable({

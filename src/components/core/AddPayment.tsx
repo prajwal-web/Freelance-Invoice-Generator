@@ -10,7 +10,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useDispatch } from "react-redux";
 import { addPayment } from "../../redux/slices/InvoiceSlice";
 
-export default function AddPaymentModal({
+export default function Addpayment({
   setPaymentAdded,
   setPaymentData,
   selectedClient,

@@ -1,9 +1,9 @@
-import AddServiceModal from "../core/AddServiceModal";
+import AddService from "../core/AddService";
 
 const InvoicePage = () => {
   return (
     <>
-      <AddServiceModal />
+      <AddService />
     </>
   );
 };

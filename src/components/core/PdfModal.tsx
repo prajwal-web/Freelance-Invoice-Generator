@@ -28,7 +28,7 @@ export default function PdfModal({ handleClose }: TPdfModal) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <PDFViewer width="900px" height="600px">
+          <PDFViewer width="600px" height="620px">
             <InvoicePdf />
           </PDFViewer>
         </Box>

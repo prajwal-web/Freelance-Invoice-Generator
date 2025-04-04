@@ -6,7 +6,6 @@ import { Button, Tooltip } from "@mui/material";
 import BasicModal from "./BasicModal";
 import { useDispatch } from "react-redux";
 import { modalSlice, toggleMode } from "../../redux/slices/ToggleSlice";
-// import { modalSlice } from "../../redux/slices/ToggleSlice";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ModeIcon from "@mui/icons-material/Mode";
 
@@ -22,7 +21,7 @@ const SideBar = () => {
       >
         <Box
           sx={{
-            width: 250,
+            width: { xs: 100, sm: 200, lg: 250 },
             bgcolor: "background.default",
             height: "100%",
             paddingTop: 4,

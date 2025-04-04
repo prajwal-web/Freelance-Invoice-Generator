@@ -1,4 +1,3 @@
-// src/theme/theme.ts
 import { createTheme, Theme } from "@mui/material/styles";
 
 export const AppTheme = (mode: "light" | "dark"): Theme =>

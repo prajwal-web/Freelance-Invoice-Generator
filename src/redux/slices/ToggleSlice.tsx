@@ -3,11 +3,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
+type MsgType = "success" | "error" | "info" | "warning";
+
 export interface AppUIState {
   snackToggle: {
     snackBar: boolean;
     snackbarMessage: string;
-    msgType: string;
+    msgType: MsgType;
   };
   modal: boolean;
   pdfModal: boolean;
@@ -18,7 +20,7 @@ const initialState: AppUIState = {
   snackToggle: {
     snackbarMessage: "",
     snackBar: false,
-    msgType: "",
+    msgType: "success",
   },
   pdfModal: false,
   modal: false,
@@ -35,7 +37,7 @@ export const ToggleSlice = createSlice({
     setSnackbarMessage: (state, action: PayloadAction<string>) => {
       state.snackToggle.snackbarMessage = action.payload;
     },
-    setSnackbarType: (state, action: PayloadAction<string>) => {
+    setSnackbarType: (state, action: PayloadAction<MsgType>) => {
       state.snackToggle.msgType = action.payload;
     },
     modalSlice: (state, action: PayloadAction<boolean>) => {
