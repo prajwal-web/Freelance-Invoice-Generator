@@ -33,6 +33,9 @@ export default function InvoiceTable() {
   const invoices = useAppSelector(selectInvoices);
   console.log("invoices ", invoices);
 
+
+  
+
   const data = React.useMemo(
     () =>
       invoices.invoice.map((invoice: any) => ({
@@ -42,6 +45,7 @@ export default function InvoiceTable() {
         totalAmount: invoice?.payment?.totalAmount || 0,
         amountPaid: invoice?.payment?.amountPaid || 0,
         remainingPay: invoice?.payment?.remaining || 0,
+        totalTax: invoice?.payment?.totalTax || 0,
         services:
           invoice?.services
             ?.map((service: any) => service.description)
@@ -63,6 +67,10 @@ export default function InvoiceTable() {
       {
         header: "Amount Paid",
         accessorKey: "amountPaid",
+        cell: (info) => `${info.row.original.currency} ${info.getValue()}`,
+      },{
+        header: "TOtal Tax",
+        accessorKey: "totalTax",
         cell: (info) => `${info.row.original.currency} ${info.getValue()}`,
       },
       {

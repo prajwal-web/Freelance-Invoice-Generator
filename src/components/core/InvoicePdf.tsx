@@ -7,6 +7,7 @@ import {
   View,
   Image,
 } from "@react-pdf/renderer";
+import { useAppSelector } from "../../redux/hooks";
 
 Font.register({
   family: "Oswald",
@@ -136,16 +137,16 @@ export const InvoicePdf = () => {
             <Text>Invoice #INV-273</Text>
           </View>
           <View style={styles.spaceY}>
-            <Text style={styles.textBold}>Client Name</Text>
+            <Text style={styles.textBold}>Client Name </Text>
             <Text>Prajwal V</Text>
           </View>
         </View>
 
         <View style={styles.spaceY}>
           <Text style={[styles.billTo, styles.textBold]}>Bill To:</Text>
-          <Text>Client Name</Text>
-          <Text>Client Address</Text>
-          <Text>Client Phone</Text>
+          <Text>Client Name : Prajwal V</Text>
+          <Text>Client Address : Bangalore-560073</Text>
+          <Text>Client Phone : 7019789368</Text>
         </View>
 
         <View style={styles.title}>

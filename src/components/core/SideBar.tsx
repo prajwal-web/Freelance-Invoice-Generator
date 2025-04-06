@@ -2,12 +2,11 @@ import Box from "@mui/material/Box";
 import { Link } from "react-router";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AddCardIcon from "@mui/icons-material/AddCard";
-import { Button, Tooltip } from "@mui/material";
+import { Button } from "@mui/material";
 import BasicModal from "./BasicModal";
 import { useDispatch } from "react-redux";
-import { modalSlice, toggleMode } from "../../redux/slices/ToggleSlice";
+import { modalSlice } from "../../redux/slices/ToggleSlice";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ModeIcon from "@mui/icons-material/Mode";
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -106,34 +105,7 @@ const SideBar = () => {
                 Create Invoice
               </Button>
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: 3,
-                padding: "10px 0",
-                borderRadius: 2,
-                cursor: "pointer",
-              }}
-            >
-              <Tooltip title="change mode">
-                <Button
-                  variant="text"
-                  color="inherit"
-                  startIcon={<ModeIcon />}
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: "1rem",
-                    color: "text.primary",
-                  }}
-                  onClick={() => {
-                    dispatch(toggleMode());
-                  }}
-                >
-                  Change Mode
-                </Button>
-              </Tooltip>
-            </Box>
+            
           </Box>
         </Box>
       </Box>

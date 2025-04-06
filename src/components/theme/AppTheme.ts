@@ -11,8 +11,8 @@ export const AppTheme = (mode: "light" | "dark"): Theme =>
         main: "#77d92b",
       },
       background: {
-        default: mode === "dark" ? "#1b2e2b" : "black",
-        paper: mode === "dark" ? "#1a6767" : "#575151",
+        default: mode === "dark" ? "#1b2e2b" : "#1b2e2b",
+        paper: mode === "dark" ? "#1a6767" : "#1a6767",
       },
       text: {
         primary: mode === "dark" ? "#fff" : "#fff",
