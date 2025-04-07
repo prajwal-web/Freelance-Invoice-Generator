@@ -9,4 +9,5 @@ module.exports = {
       },
     ],
   },
+  setupFiles: ["<rootDir>/src/setupTests.ts"], // If setupTests.ts is inside `src`
 };

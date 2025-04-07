@@ -8,7 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { Formik, Form } from "formik";
 import { ServiceSchema } from "../../validation/InvoiceValidationForm";
-import AddPaymentModal from "./AddPayment";  
+import AddPaymentModal from "./AddPayment";
 import {
   addInvoice,
   addPayment,
@@ -35,7 +35,6 @@ export default function AddService() {
   const [servicesList, setServicesList] = useState<Service[]>([]);
   const [paymentAdded, setPaymentAdded] = useState(false);
   const [paymentData, setPaymentData] = useState<any>(null);
-
   const [subTotal, setSubTotal] = useState<number>(0);
   const [taxes, setTaxes] = useState<number>(0);
   const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -51,7 +50,6 @@ export default function AddService() {
       dispatch(snackbar(true));
       return;
     }
-
     servicesList.forEach((service) => {
       dispatch(addService({ clientId: selectedClient, service }));
     });
@@ -64,15 +62,11 @@ export default function AddService() {
       (total, service) => total + service.rate,
       0
     );
-
     const taxesAmount = totalServicesAmount * 0.18;
-
     const total = totalServicesAmount + taxesAmount;
 
-    const totalTax = taxesAmount;
-
     const invoiceData = {
-      id: `inv-${Math.floor(Math.random() * 100)}`,
+      id: `inv${Math.floor(Math.random() * 100)}`,
       clientId: selectedClient,
       totalAmount: total,
       services: servicesList,
@@ -81,23 +75,14 @@ export default function AddService() {
 
     dispatch(addInvoice(invoiceData));
 
-    const updatedPaymentData = {
-      ...paymentData,
-      totalTax: totalTax,
-    };
-
-    dispatch(addPayment({ clientId: selectedClient, payment: updatedPaymentData }));
-
     setSubTotal(totalServicesAmount);
     setTaxes(taxesAmount);
     setTotalAmount(total);
-
     setPaymentAdded(false);
-    setServicesList([]);
+    setShowServiceFields(false);
     setPaymentData(null);
-
     setTimeout(() => {
-      navigate("/"); 
+      navigate("/");
     }, 3000);
   };
 
@@ -121,7 +106,7 @@ export default function AddService() {
         sx={{ mb: 3 }}
       >
         {clients.map((client) => (
-          <MenuItem key={client.email} value={client.id}>
+          <MenuItem key={client.email} value={client.email}>
             {client.email}
           </MenuItem>
         ))}
@@ -224,6 +209,9 @@ export default function AddService() {
 
             setServicesList([...servicesList, newService]);
             setShowServiceFields(false);
+            dispatch(
+              addService({ clientId: selectedClient, service: newService })
+            );
           }}
         >
           {({ values, errors, touched, handleChange, handleReset }) => (

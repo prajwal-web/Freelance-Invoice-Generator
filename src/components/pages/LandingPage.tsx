@@ -4,7 +4,7 @@ import AppRouter from "../../router/AppRouter";
 
 const invoiceStyle: React.CSSProperties = {
   fontWeight: "bold",
-  fontSize: "3rem",
+  fontSize: "2.5rem",
   color: "white",
   textAlign: "center",
   marginTop: "20px",
@@ -12,10 +12,18 @@ const invoiceStyle: React.CSSProperties = {
 };
 
 const xpertStyle: React.CSSProperties = {
-  fontSize: "2rem",
+  fontSize: "1.6rem",
   color: "rgba(56, 36, 143, 1)",
   position: "relative",
-  top: "12px",
+  top: "14px",
+  fontFamily: "'Poppins', sans-serif",
+  fontWeight: "600",
+};
+const xStyle: React.CSSProperties = {
+  fontSize: "2.5rem",
+  color: "rgba(56, 36, 143, 1)",
+  position: "relative",
+  top: "10px",
   fontFamily: "'Poppins', sans-serif",
   fontWeight: "600",
 };
@@ -51,13 +59,11 @@ const LandingPage = () => {
           sx={{
             display: "flex",
             alignItems: "center",
-            flexDirection: "row",
-            color: "#212121",
-            fontFamily: "'Poppins', sans-serif",
           }}
         >
           <span style={invoiceStyle}>Invoice</span>
-          <span style={xpertStyle}>Xpert</span>
+          <span style={xStyle}>X</span>
+          <span style={xpertStyle}>pert</span>
         </Typography>
       </Box>
 

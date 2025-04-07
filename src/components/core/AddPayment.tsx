@@ -85,7 +85,7 @@ export default function Addpayment({
         >
           {({ errors, touched, handleChange, handleReset, values }) => (
             <Form>
-              <Box mt={2}>
+              <Box mt={1}>
                 <TextField
                   label="Total Amount"
                   name="totalAmount"

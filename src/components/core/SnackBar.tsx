@@ -1,4 +1,3 @@
-// src/components/CustomizedSnackbars.tsx
 import * as React from "react";
 
 import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";

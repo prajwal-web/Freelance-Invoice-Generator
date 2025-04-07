@@ -19,33 +19,29 @@ import {
 import { useAppSelector } from "../../redux/hooks";
 import { selectInvoices } from "../../redux/slices/InvoiceSlice";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
-import React from "react";
+import React, { useState } from "react";
 import PdfModal from "./PdfModal";
 import { useDispatch } from "react-redux";
 import { pdfModal } from "../../redux/slices/ToggleSlice";
 
 export default function InvoiceTable() {
+  const [selectedId, setSelectedId] = useState("");
   const dispatch = useDispatch();
 
   const handleClose = () => {
     dispatch(pdfModal(false));
   };
   const invoices = useAppSelector(selectInvoices);
-  console.log("invoices ", invoices);
-
-
-  
 
   const data = React.useMemo(
     () =>
       invoices.invoice.map((invoice: any) => ({
-        invoiceId: invoice?.id || `inv-${Math.floor(Math.random() * 100)}`,
+        invoiceId: invoice?.id || `inv${Math.floor(Math.random() * 100)}`,
         clientId: invoice?.clientId || "N/A",
         currency: invoice?.services?.[0]?.currency || "N/A",
         totalAmount: invoice?.payment?.totalAmount || 0,
         amountPaid: invoice?.payment?.amountPaid || 0,
         remainingPay: invoice?.payment?.remaining || 0,
-        totalTax: invoice?.payment?.totalTax || 0,
         services:
           invoice?.services
             ?.map((service: any) => service.description)
@@ -68,10 +64,6 @@ export default function InvoiceTable() {
         header: "Amount Paid",
         accessorKey: "amountPaid",
         cell: (info) => `${info.row.original.currency} ${info.getValue()}`,
-      },{
-        header: "TOtal Tax",
-        accessorKey: "totalTax",
-        cell: (info) => `${info.row.original.currency} ${info.getValue()}`,
       },
       {
         header: "Remaining Payment",
@@ -81,11 +73,14 @@ export default function InvoiceTable() {
       {
         header: "Actions",
         id: "actions",
-        cell: () => (
+        cell: ({ row }) => (
           <Button
             variant="text"
             sx={{ color: "#38248f" }}
-            onClick={() => dispatch(pdfModal(true))}
+            onClick={() => {
+              setSelectedId(row.original.invoiceId);
+              dispatch(pdfModal(true));
+            }}
           >
             <FullscreenIcon />
           </Button>
@@ -156,7 +151,7 @@ export default function InvoiceTable() {
           </Table>
         </TableContainer>
       </Paper>
-      <PdfModal handleClose={handleClose} />
+      <PdfModal handleClose={handleClose} selectedId={selectedId} />
     </>
   );
 }

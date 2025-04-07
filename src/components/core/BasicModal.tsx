@@ -28,6 +28,7 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isOpen = useAppSelector((state: RootState) => state.snack.modal);
+
   const clients = useAppSelector((state) => state.clients.clients);
 
   return (
@@ -52,7 +53,6 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
           }}
           validationSchema={ClientSchema}
           onSubmit={(values, { resetForm }) => {
-            console.log(values);
             const exists = clients.find(
               (client) =>
                 client.id === values.id || client.email === values.email

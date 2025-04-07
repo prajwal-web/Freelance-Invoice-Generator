@@ -31,14 +31,13 @@ import {
 
 function ClientTable() {
   const clients = useAppSelector(selectClients);
-
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = React.useState(false);
   const [selectedClientId, setSelectedClientId] = React.useState<string | null>(
     null
   );
 
-  const handleOpenDialog = (id: string) => {
+  const handleOpenDialog = (id: React.SetStateAction<string | null>) => {
     setSelectedClientId(id);
     setOpenDialog(true);
   };

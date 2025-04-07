@@ -86,7 +86,6 @@ const SideBar = () => {
                 marginBottom: 3,
                 padding: "10px 0",
                 borderRadius: 2,
-
                 cursor: "pointer",
               }}
             >
@@ -105,7 +104,6 @@ const SideBar = () => {
                 Create Invoice
               </Button>
             </Box>
-            
           </Box>
         </Box>
       </Box>

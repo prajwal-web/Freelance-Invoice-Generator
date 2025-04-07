@@ -6,7 +6,9 @@ import { Box } from "@mui/material";
 
 type TPdfModal = {
   handleClose: () => void;
+  selectedId: string;
 };
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -16,8 +18,12 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-export default function PdfModal({ handleClose }: TPdfModal) {
+
+export default function PdfModal({ handleClose, selectedId }: TPdfModal) {
   const pdfmodal = useAppSelector((state) => state.snack.pdfModal);
+  const invoice = useAppSelector((state) =>
+    state.invoices.invoice.find((inv) => inv.id === selectedId)
+  );
 
   return (
     <div>
@@ -29,7 +35,7 @@ export default function PdfModal({ handleClose }: TPdfModal) {
       >
         <Box sx={style}>
           <PDFViewer width="600px" height="620px">
-            <InvoicePdf />
+            <InvoicePdf invoiceData={invoice} />
           </PDFViewer>
         </Box>
       </Modal>

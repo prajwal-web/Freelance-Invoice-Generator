@@ -13,8 +13,8 @@ type Payment = {
   amountPaid: number;
   totalAmount: number;
   remaining: number;
-  taxAmount: number;
-  taxRate: number;
+  taxAmount?: number;
+  taxRate?: number;
 };
 
 type Invoice = {
@@ -74,16 +74,14 @@ export const invoiceSlice = createSlice({
 
       if (invoice) {
         invoice.payment = action.payload.payment;
-        console.log("Payment added to existing invoice.");
       } else {
         const newInvoice: Invoice = {
-          id: `inv-${Math.floor(Math.random() * 100)}`,
+          id: `inv${Math.floor(Math.random() * (100 - 4 + 1)) + 4}`,
           clientId: action.payload.clientId,
           payment: action.payload.payment,
           services: [],
         };
-        state.invoice = [...state.invoice,newInvoice]
-        console.log("New invoice created and payment added.");
+        state.invoice = [...state.invoice, newInvoice];
       }
     },
   },

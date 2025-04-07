@@ -1,12 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-refresh/only-export-components */
-// src/redux/slices/SnackbarSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type MsgType = "success" | "error" | "info" | "warning";
 
 export interface AppUIState {
-  [x: string]: any;
   snackToggle: {
     snackBar: boolean;
     snackbarMessage: string;
@@ -26,8 +22,8 @@ const initialState: AppUIState = {
   modal: false,
 };
 
-export const ToggleSlice = createSlice({
-  name: "snack",
+export const appUISlice = createSlice({
+  name: "appUI",
   initialState,
   reducers: {
     snackbar: (state, action: PayloadAction<boolean>) => {
@@ -47,13 +43,13 @@ export const ToggleSlice = createSlice({
     },
   },
 });
+
 export const {
   snackbar,
   setSnackbarMessage,
   modalSlice,
   setSnackbarType,
   pdfModal,
-} = ToggleSlice.actions;
+} = appUISlice.actions;
 
-
-export default ToggleSlice.reducer;
+export default appUISlice.reducer;

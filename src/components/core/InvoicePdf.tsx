@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Document,
   Font,
@@ -7,7 +8,6 @@ import {
   View,
   Image,
 } from "@react-pdf/renderer";
-import { useAppSelector } from "../../redux/hooks";
 
 Font.register({
   family: "Oswald",
@@ -127,14 +127,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export const InvoicePdf = () => {
+export const InvoicePdf = ({ invoiceData }: any) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
           <View>
             <Text style={[styles.title, styles.textBold]}>INVOICE</Text>
-            <Text>Invoice #INV-273</Text>
+            <Text>Invoice {invoiceData.id}</Text>
           </View>
           <View style={styles.spaceY}>
             <Text style={styles.textBold}>Client Name </Text>
@@ -144,9 +144,9 @@ export const InvoicePdf = () => {
 
         <View style={styles.spaceY}>
           <Text style={[styles.billTo, styles.textBold]}>Bill To:</Text>
-          <Text>Client Name : Prajwal V</Text>
-          <Text>Client Address : Bangalore-560073</Text>
-          <Text>Client Phone : 7019789368</Text>
+          <Text> Prajwal V</Text>
+          <Text> Bangalore-560073</Text>
+          <Text>7019789368</Text>
         </View>
 
         <View style={styles.title}>
@@ -160,18 +160,14 @@ export const InvoicePdf = () => {
             <Text style={styles.tableHeader}>Rate</Text>
             <Text style={styles.tableHeader}>Time</Text>
           </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableCell}>Web Developer</Text>
-            <Text style={styles.tableCell}>USD</Text>
-            <Text style={styles.tableCell}>$100</Text>
-            <Text style={styles.tableCell}>21/04/76</Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableCell}>App Development</Text>
-            <Text style={styles.tableCell}>EUR</Text>
-            <Text style={styles.tableCell}>€150</Text>
-            <Text style={styles.tableCell}>04/02/82</Text>
-          </View>
+          {invoiceData.services.map((data: any, index: number) => (
+            <View style={styles.tableRow} key={index}>
+              <Text style={styles.tableCell}>{data.description}</Text>
+              <Text style={styles.tableCell}>{data.currency}</Text>
+              <Text style={styles.tableCell}>{data.rate}</Text>
+              <Text style={styles.tableCell}>{data.time}</Text>
+            </View>
+          ))}
         </View>
 
         <View style={styles.spaceY}>
@@ -181,16 +177,28 @@ export const InvoicePdf = () => {
           <View style={styles.tableRow}>
             <Text style={styles.tableHeader}>Total Amount</Text>
             <Text style={styles.tableHeader}>Amount Paid</Text>
-            <Text style={styles.tableHeader}>Tax (18%)</Text>
+            <Text style={styles.tableHeader}>Tax Amount</Text>
             <Text style={styles.tableHeader}>Remaining Amount</Text>
             <Text style={styles.tableHeader}>Tax (Sub Total)</Text>
           </View>
           <View style={styles.tableRow}>
-            <Text style={styles.tableCell}>1000</Text>
-            <Text style={styles.tableCell}>200</Text>
-            <Text style={styles.tableCell}>180</Text>
-            <Text style={styles.tableCell}>380</Text>
-            <Text style={styles.tableCell}>1180</Text>
+            <Text style={styles.tableCell}>
+              {invoiceData.payment.totalAmount}
+            </Text>
+            <Text style={styles.tableCell}>
+              {invoiceData.payment.amountPaid}
+            </Text>
+            <Text style={styles.tableCell}>
+              {invoiceData.payment.taxAmount || 0}
+            </Text>
+            <Text style={styles.tableCell}>
+              {invoiceData.payment.remaining}
+            </Text>
+            <Text style={styles.tableCell}>
+              {invoiceData.payment.totalAmount +
+                invoiceData.payment.taxAmount ||
+                invoiceData.payment.totalAmount}
+            </Text>
           </View>
         </View>
 
