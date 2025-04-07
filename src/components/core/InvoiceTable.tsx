@@ -71,8 +71,8 @@ export default function InvoiceTable() {
         cell: (info) => `${info.row.original.currency} ${info.getValue()}`,
       },
       {
-        header: "Actions",
-        id: "actions",
+        header: "View",
+        id: "view",
         cell: ({ row }) => (
           <Button
             variant="text"

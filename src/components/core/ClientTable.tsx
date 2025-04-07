@@ -82,8 +82,8 @@ function ClientTable() {
         cell: (info) => info.getValue(),
       },
       {
-        header: "Actions",
-        id: "actions",
+        header: "Delete",
+        id: "delete",
         cell: ({ row }) => (
           <Button
             variant="text"

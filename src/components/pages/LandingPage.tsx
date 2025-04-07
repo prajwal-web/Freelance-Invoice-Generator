@@ -49,7 +49,6 @@ const LandingPage = () => {
           sx={{
             height: 60,
             width: 60,
-            borderRadius: "50%",
           }}
           alt="Logo"
           src="https://i.pinimg.com/originals/43/04/f4/4304f43275086daecc81676128b651f5.png"
