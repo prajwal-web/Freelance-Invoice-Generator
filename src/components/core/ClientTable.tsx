@@ -16,7 +16,6 @@ import {
   Button,
   Typography,
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogActions,
 } from "@mui/material";
@@ -169,7 +168,6 @@ function ClientTable() {
       </Paper>
 
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle sx={{ color: "black" }}>Confirm Delete</DialogTitle>
         <DialogContent sx={{ color: "black" }}>
           Are you sure you want to delete this client?
         </DialogContent>

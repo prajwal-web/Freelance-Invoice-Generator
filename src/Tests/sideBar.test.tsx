@@ -41,18 +41,23 @@ const renderWithProviders = (component: React.ReactElement) => {
 describe("BasicSidebar Navigation", () => {
   test("navigates to /invoice when 'Create Invoice' link is clicked", () => {
     renderWithProviders(<SideBar />);
-
     const createInvoiceLink = screen.getByRole("link", {
       name: /create invoice/i,
     });
-
     fireEvent.click(createInvoiceLink);
-
     expect(screen.getByTestId("location-display")).toHaveTextContent(
       "/invoice"
     );
-
     expect(screen.getByText("Invoices Page")).toBeInTheDocument();
+  });
+  test("navigates to homePage when 'DashBoard' link is clicked", () => {
+    renderWithProviders(<SideBar />);
+    const dashBoardLink = screen.getByRole("link", {
+      name: /dashBoard/i,
+    });
+    fireEvent.click(dashBoardLink);
+    expect(screen.getByTestId("location-display")).toHaveTextContent("/");
+    expect(screen.getByText("DashBoard")).toBeInTheDocument();
   });
 
   test("Add Clients button is in the document", () => {
