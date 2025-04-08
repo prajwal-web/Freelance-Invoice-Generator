@@ -120,7 +120,7 @@ function ClientTable() {
                       key={header.id}
                       align="center"
                       sx={{
-                        backgroundColor: "black",
+                        backgroundColor: "#232323",
                         color: "white",
                         fontWeight: "bold",
                       }}

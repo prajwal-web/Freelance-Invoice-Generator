@@ -112,7 +112,7 @@ export default function InvoiceTable() {
                       key={header.id}
                       align="center"
                       sx={{
-                        backgroundColor: "black",
+                        backgroundColor: "#232323",
                         fontWeight: "bold",
                         color: "white",
                       }}
