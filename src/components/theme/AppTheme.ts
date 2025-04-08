@@ -10,9 +10,14 @@ export const AppTheme = (mode: "light" | "dark"): Theme =>
       secondary: {
         main: "#77d92b",
       },
+      // background: {
+      //   default: mode === "dark" ? "#1b2e2b" : "#1b2e2b",
+      //   paper: mode === "dark" ? "#1a6767" : "#1a6767",
+      // },
+      // #c8c8c8
       background: {
-        default: mode === "dark" ? "#1b2e2b" : "#1b2e2b",
-        paper: mode === "dark" ? "#1a6767" : "#1a6767",
+        default: mode === "dark" ? "#fff" : "#dddddd",
+        paper: mode === "dark" ? "#fff" : "#fff",
       },
       text: {
         primary: mode === "dark" ? "#fff" : "#fff",
@@ -27,10 +32,11 @@ export const AppTheme = (mode: "light" | "dark"): Theme =>
         letterSpacing: "-0.5px",
       },
       h5: {
-        fontSize: "1.5rem",
-        fontFamily: "cursive",
+        marginTop: "5px",
+        fontSize: "1.8rem",
         fontWeight: 700,
-        letterSpacing: "3px",
+        letterSpacing: "2px",
+        fontFamily: "bold",
       },
       h2: {
         fontSize: "2rem",

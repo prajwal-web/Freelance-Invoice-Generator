@@ -47,6 +47,7 @@ const SideBar = () => {
                   fontWeight: 700,
                   fontSize: "1rem",
                   textTransform: "none",
+                  color: "black",
                 }}
               >
                 DashBoard
@@ -64,12 +65,12 @@ const SideBar = () => {
             >
               <Button
                 variant="text"
-                color="inherit"
+                color="primary"
                 startIcon={<PersonAddIcon />}
                 sx={{
                   fontWeight: 700,
                   fontSize: "1rem",
-                  color: "text.primary",
+                  color: "black",
                 }}
                 onClick={() => {
                   dispatch(modalSlice(true));
@@ -99,6 +100,7 @@ const SideBar = () => {
                   fontWeight: 700,
                   fontSize: "1rem",
                   textTransform: "none",
+                  color: "black",
                 }}
               >
                 Create Invoice

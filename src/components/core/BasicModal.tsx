@@ -27,7 +27,7 @@ const modalStyle = {
 const BasicModal = ({ onClose }: { onClose: () => void }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isOpen = useAppSelector((state: RootState) => state.snack.modal);
+  const isOpen = useAppSelector((state: RootState) => state.appUI.modal);
 
   const clients = useAppSelector((state) => state.clients.clients);
 
@@ -39,7 +39,11 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={modalStyle}>
-        <Typography variant="h5" id="modal-modal-title">
+        <Typography
+          sx={{ fontSize: "1.5rem", fontFamily: "bold", fontWeight: "bold" }}
+          id="modal-modal-title"
+          color="black"
+        >
           Add Client
         </Typography>
 
@@ -89,11 +93,32 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
                 name="id"
                 variant="standard"
                 fullWidth
-                sx={{ mt: 2 }}
+                sx={{
+                  mt: 2,
+                  color: "black",
+                  "& .MuiInputLabel-root": {
+                    color: "black",
+                  },
+                  "& .MuiInput-underline:before": {
+                    borderBottom: "2px solid black",
+                  },
+                  "& .MuiInput-underline:hover:before": {
+                    borderBottom: "2px solid black",
+                  },
+                  "& .MuiInput-underline.Mui-focused:before": {
+                    borderBottom: "2px solid black",
+                  },
+                }}
                 value={values.id}
                 onChange={handleChange}
                 error={touched.id && Boolean(errors.id)}
                 helperText={touched.id && errors.id}
+                InputLabelProps={{
+                  style: { color: "black" },
+                }}
+                InputProps={{
+                  style: { color: "black" },
+                }}
               />
 
               <TextField
@@ -101,11 +126,32 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
                 name="name"
                 variant="standard"
                 fullWidth
-                sx={{ mt: 2 }}
+                sx={{
+                  mt: 2,
+                  color: "black",
+                  "& .MuiInputLabel-root": {
+                    color: "black",
+                  },
+                  "& .MuiInput-underline:before": {
+                    borderBottom: "2px solid black",
+                  },
+                  "& .MuiInput-underline:hover:before": {
+                    borderBottom: "2px solid black",
+                  },
+                  "& .MuiInput-underline.Mui-focused:before": {
+                    borderBottom: "2px solid black",
+                  },
+                }}
                 value={values.name}
                 onChange={handleChange}
                 error={touched.name && Boolean(errors.name)}
                 helperText={touched.name && errors.name}
+                InputLabelProps={{
+                  style: { color: "black" },
+                }}
+                InputProps={{
+                  style: { color: "black" },
+                }}
               />
 
               <TextField
@@ -113,11 +159,32 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
                 name="email"
                 variant="standard"
                 fullWidth
-                sx={{ mt: 2 }}
+                sx={{
+                  mt: 2,
+                  color: "black",
+                  "& .MuiInputLabel-root": {
+                    color: "black",
+                  },
+                  "& .MuiInput-underline:before": {
+                    borderBottom: "2px solid black",
+                  },
+                  "& .MuiInput-underline:hover:before": {
+                    borderBottom: "2px solid black",
+                  },
+                  "& .MuiInput-underline.Mui-focused:before": {
+                    borderBottom: "2px solid black",
+                  },
+                }}
                 value={values.email}
                 onChange={handleChange}
                 error={touched.email && Boolean(errors.email)}
                 helperText={touched.email && errors.email}
+                InputLabelProps={{
+                  style: { color: "black" },
+                }}
+                InputProps={{
+                  style: { color: "black" },
+                }}
               />
 
               <TextField
@@ -125,11 +192,32 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
                 name="phone"
                 variant="standard"
                 fullWidth
-                sx={{ mt: 2 }}
+                sx={{
+                  mt: 2,
+                  color: "black",
+                  "& .MuiInputLabel-root": {
+                    color: "black",
+                  },
+                  "& .MuiInput-underline:before": {
+                    borderBottom: "2px solid black",
+                  },
+                  "& .MuiInput-underline:hover:before": {
+                    borderBottom: "2px solid black",
+                  },
+                  "& .MuiInput-underline.Mui-focused:before": {
+                    borderBottom: "2px solid black",
+                  },
+                }}
                 value={values.phone}
                 onChange={handleChange}
                 error={touched.phone && Boolean(errors.phone)}
                 helperText={touched.phone && errors.phone}
+                InputLabelProps={{
+                  style: { color: "black" },
+                }}
+                InputProps={{
+                  style: { color: "black" },
+                }}
               />
 
               <TextField
@@ -137,11 +225,32 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
                 name="address"
                 variant="standard"
                 fullWidth
-                sx={{ mt: 2 }}
+                sx={{
+                  mt: 2,
+                  color: "black",
+                  "& .MuiInputLabel-root": {
+                    color: "black",
+                  },
+                  "& .MuiInput-underline:before": {
+                    borderBottom: "2px solid black",
+                  },
+                  "& .MuiInput-underline:hover:before": {
+                    borderBottom: "2px solid black",
+                  },
+                  "& .MuiInput-underline.Mui-focused:before": {
+                    borderBottom: "2px solid black",
+                  },
+                }}
                 value={values.address}
                 onChange={handleChange}
                 error={touched.address && Boolean(errors.address)}
                 helperText={touched.address && errors.address}
+                InputLabelProps={{
+                  style: { color: "black" },
+                }}
+                InputProps={{
+                  style: { color: "black" },
+                }}
               />
 
               <Button

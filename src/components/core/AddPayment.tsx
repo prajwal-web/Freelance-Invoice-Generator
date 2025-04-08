@@ -42,7 +42,7 @@ export default function Addpayment({
           onClick={() => setShowPaymentFields(true)}
         >
           <Tooltip title="Add Payment">
-            <AddIcon sx={{ fontSize: 30, color: "text.primary" }} />
+            <AddIcon sx={{ fontSize: 30, color: "black" }} />
           </Tooltip>
         </Box>
       )}
@@ -92,7 +92,15 @@ export default function Addpayment({
                   variant="standard"
                   margin="normal"
                   fullWidth
-                  sx={{ mt: 2 }}
+                  sx={{
+                    mt: 2,
+                    "& .MuiInputLabel-root": {
+                      color: "black",
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "black",
+                    },
+                  }}
                   value={values.totalAmount}
                   onChange={handleChange}
                   error={touched.totalAmount && Boolean(errors.totalAmount)}
@@ -110,7 +118,15 @@ export default function Addpayment({
                   variant="standard"
                   margin="normal"
                   fullWidth
-                  sx={{ mt: 2 }}
+                  sx={{
+                    mt: 2,
+                    "& .MuiInputLabel-root": {
+                      color: "black",
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "black",
+                    },
+                  }}
                   value={values.amountPaid}
                   onChange={handleChange}
                   error={touched.amountPaid && Boolean(errors.amountPaid)}
@@ -127,7 +143,15 @@ export default function Addpayment({
                   variant="standard"
                   margin="normal"
                   fullWidth
-                  sx={{ mt: 2 }}
+                  sx={{
+                    mt: 2,
+                    "& .MuiInputLabel-root": {
+                      color: "black",
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "black",
+                    },
+                  }}
                   value={values.remAmount}
                   onChange={handleChange}
                   error={touched.remAmount && Boolean(errors.remAmount)}
@@ -144,7 +168,15 @@ export default function Addpayment({
                   variant="standard"
                   margin="normal"
                   fullWidth
-                  sx={{ mt: 2 }}
+                  sx={{
+                    mt: 2,
+                    "& .MuiInputLabel-root": {
+                      color: "black",
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "black",
+                    },
+                  }}
                   value={values.taxRate}
                   error={touched.taxRate && Boolean(errors.taxRate)}
                   helperText={
@@ -183,7 +215,7 @@ export default function Addpayment({
             alignItems: "center",
             height: "65px",
             borderRadius: "20px",
-            backgroundColor: "#FFF085",
+            backgroundColor: "#dddddd",
             padding: "10px",
             textAlign: "center",
             border: "1px solid black",

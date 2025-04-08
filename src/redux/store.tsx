@@ -5,7 +5,7 @@ import invoiceReducer from "./slices/InvoiceSlice";
 
 const store = configureStore({
   reducer: {
-    snack: snackbarReducer,
+    appUI: snackbarReducer,
     clients: clientReducer,
     invoices: invoiceReducer,
   },

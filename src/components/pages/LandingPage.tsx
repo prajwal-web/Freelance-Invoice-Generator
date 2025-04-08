@@ -5,7 +5,7 @@ import AppRouter from "../../router/AppRouter";
 const invoiceStyle: React.CSSProperties = {
   fontWeight: "bold",
   fontSize: "2.5rem",
-  color: "white",
+  color: "black",
   textAlign: "center",
   marginTop: "20px",
   fontFamily: "'Poppins', sans-serif",

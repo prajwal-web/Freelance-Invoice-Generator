@@ -98,7 +98,7 @@ export default function InvoiceTable() {
 
   return (
     <>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" gutterBottom color="black">
         Invoices Table
       </Typography>
       <Paper sx={{ width: "100%" }}>
@@ -137,7 +137,11 @@ export default function InvoiceTable() {
                 table.getRowModel().rows.map((row) => (
                   <TableRow key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} align="center">
+                      <TableCell
+                        key={cell.id}
+                        align="center"
+                        sx={{ color: "black", fontWeight: 500 }}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

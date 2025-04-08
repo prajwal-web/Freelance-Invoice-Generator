@@ -7,7 +7,7 @@ import CustomizedSnackbars from "./components/core/SnackBar";
 import { AppTheme } from "./components/theme/AppTheme";
 import LandingPage from "./components/pages/LandingPage";
 const AppContent = () => {
-  const themeMode = useSelector((state: RootState) => state.snack.themeMode);
+  const themeMode = useSelector((state: RootState) => state.appUI.themeMode);
   const theme = AppTheme(themeMode);
   return (
     <ThemeProvider theme={theme}>

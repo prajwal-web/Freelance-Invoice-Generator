@@ -20,7 +20,7 @@ const style = {
 };
 
 export default function PdfModal({ handleClose, selectedId }: TPdfModal) {
-  const pdfmodal = useAppSelector((state) => state.snack.pdfModal);
+  const pdfmodal = useAppSelector((state) => state.appUI.pdfModal);
   const invoice = useAppSelector((state) =>
     state.invoices.invoice.find((inv) => inv.id === selectedId)
   );

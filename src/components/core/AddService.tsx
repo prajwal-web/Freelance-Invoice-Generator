@@ -83,7 +83,10 @@ export default function AddService() {
     setPaymentData(null);
     setTimeout(() => {
       navigate("/");
-    }, 3000);
+    }, 2000);
+    dispatch(setSnackbarType("success"));
+    dispatch(setSnackbarMessage("Invoice has been successfully created!"));
+    dispatch(snackbar(true));
   };
 
   return (
@@ -93,7 +96,7 @@ export default function AddService() {
       mx="auto"
       sx={{ borderRadius: 2, background: "background.paper" }}
     >
-      <Typography variant="h5" mb={2}>
+      <Typography variant="h5" mb={2} color="black">
         Create Invoice
       </Typography>
 
@@ -103,16 +106,28 @@ export default function AddService() {
         label="Select Client"
         value={selectedClient}
         onChange={(e) => setSelectedClient(e.target.value)}
-        sx={{ mb: 3 }}
+        sx={{
+          mb: 3,
+          "& .MuiInputLabel-root": {
+            color: "black",
+          },
+          "& .MuiInputBase-input": {
+            color: "black",
+          },
+        }}
       >
         {clients.map((client) => (
-          <MenuItem key={client.email} value={client.email}>
+          <MenuItem
+            key={client.email}
+            value={client.email}
+            sx={{ color: "black" }}
+          >
             {client.email}
           </MenuItem>
         ))}
       </TextField>
 
-      <Typography variant="h5" mt={2} gutterBottom>
+      <Typography variant="h5" mt={2} gutterBottom color="black">
         Add Services
       </Typography>
 
@@ -128,7 +143,7 @@ export default function AddService() {
             height: "100px",
             borderRadius: 3,
             mb: 1,
-            background: "#FFF085",
+            background: "#dddddd",
             color: "black",
             width: "100%",
           }}
@@ -140,12 +155,22 @@ export default function AddService() {
               width: "100%",
             }}
           >
-            <Typography gutterBottom>{service.description}</Typography>
-            <Typography gutterBottom sx={{ position: "relative", top: 20 }}>
+            <Typography gutterBottom color="black">
+              {service.description}
+            </Typography>
+            <Typography
+              gutterBottom
+              sx={{ position: "relative", top: 20 }}
+              color="black"
+            >
               {service.currency} {service.rate}
             </Typography>
           </Box>
-          <Typography sx={{ alignSelf: "flex-start", mt: 1 }} gutterBottom>
+          <Typography
+            sx={{ alignSelf: "flex-start", mt: 1 }}
+            gutterBottom
+            color="black"
+          >
             {service.time}
           </Typography>
         </Box>
@@ -158,7 +183,7 @@ export default function AddService() {
           sx={{
             mb: 2,
             right: "17%",
-            background: "#FFF085",
+            background: "#dddddd",
             color: "black",
             position: "relative",
             ml: "93%",
@@ -185,7 +210,7 @@ export default function AddService() {
           onClick={() => setShowServiceFields(true)}
         >
           <Tooltip title="Add Services">
-            <AddIcon sx={{ fontSize: 30, color: "text.primary" }} />
+            <AddIcon sx={{ fontSize: 30, color: "black" }} />
           </Tooltip>
         </Box>
       )}
@@ -221,11 +246,19 @@ export default function AddService() {
                 name="service"
                 variant="standard"
                 fullWidth
-                sx={{ mt: 2 }}
                 value={values.service}
                 onChange={handleChange}
                 error={touched.service && Boolean(errors.service)}
                 helperText={touched.service && errors.service}
+                sx={{
+                  mt: 2,
+                  "& .MuiInputLabel-root": {
+                    color: "black",
+                  },
+                  "& .MuiInputBase-input": {
+                    color: "black",
+                  },
+                }}
               />
 
               <TextField
@@ -233,11 +266,19 @@ export default function AddService() {
                 name="rate"
                 fullWidth
                 variant="standard"
-                sx={{ mt: 2 }}
                 value={values.rate}
                 onChange={handleChange}
                 error={touched.rate && Boolean(errors.rate)}
                 helperText={touched.rate && errors.rate}
+                sx={{
+                  mt: 2,
+                  "& .MuiInputLabel-root": {
+                    color: "black",
+                  },
+                  "& .MuiInputBase-input": {
+                    color: "black",
+                  },
+                }}
               />
 
               <Box
@@ -250,16 +291,24 @@ export default function AddService() {
               >
                 <TextField
                   select
-                  sx={{ width: 200 }}
                   label="Currency"
                   name="currency"
                   value={values.currency}
                   onChange={handleChange}
                   error={touched.currency && Boolean(errors.currency)}
                   helperText={touched.currency && errors.currency}
+                  sx={{
+                    width: 200,
+                    "& .MuiInputLabel-root": {
+                      color: "black",
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "black",
+                    },
+                  }}
                 >
                   {currency.map((cur, index) => (
-                    <MenuItem key={index} value={cur}>
+                    <MenuItem key={index} value={cur} sx={{ color: "black" }}>
                       {cur}
                     </MenuItem>
                   ))}
@@ -268,12 +317,12 @@ export default function AddService() {
                 <TextField
                   type="date"
                   name="date"
-                  label="Date"
                   sx={{ width: 500 }}
                   value={values.date}
                   onChange={handleChange}
                   error={touched.date && Boolean(errors.date)}
                   helperText={touched.date && errors.date}
+                  InputProps={{ style: { color: "black" } }}
                 />
               </Box>
 
@@ -298,7 +347,7 @@ export default function AddService() {
         </Formik>
       )}
 
-      <Typography variant="h5" mt={4} gutterBottom>
+      <Typography variant="h5" mt={4} gutterBottom color="black">
         Add Payment
       </Typography>
       <AddPaymentModal
@@ -324,6 +373,7 @@ export default function AddService() {
               justifyContent: "space-between",
               width: "200px",
             }}
+            color="black"
           >
             <span>Services:</span> <span>{subTotal}</span>
           </Typography>
@@ -335,6 +385,7 @@ export default function AddService() {
               justifyContent: "space-between",
               width: "200px",
             }}
+            color="black"
           >
             <span>Taxes :</span> <span>{taxes}</span>
           </Typography>
@@ -348,6 +399,7 @@ export default function AddService() {
               borderTop: "1px solid black",
               paddingTop: "4px",
             }}
+            color="black"
           >
             <span>Sub Total:</span> <span>{totalAmount}</span>
           </Typography>

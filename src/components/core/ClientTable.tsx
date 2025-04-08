@@ -106,7 +106,7 @@ function ClientTable() {
 
   return (
     <>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" gutterBottom color="black">
         Clients Table
       </Typography>
       <Paper sx={{ width: "100%" }}>
@@ -137,7 +137,11 @@ function ClientTable() {
             <TableBody>
               {table.getRowModel().rows.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={columns.length} align="center">
+                  <TableCell
+                    colSpan={columns.length}
+                    align="center"
+                    sx={{ color: "black" }}
+                  >
                     No clients found.
                   </TableCell>
                 </TableRow>
@@ -145,7 +149,11 @@ function ClientTable() {
                 table.getRowModel().rows.map((row) => (
                   <TableRow key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} align="center">
+                      <TableCell
+                        key={cell.id}
+                        align="center"
+                        sx={{ color: "black", fontWeight: 500 }}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -161,8 +169,8 @@ function ClientTable() {
       </Paper>
 
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
+        <DialogTitle sx={{ color: "black" }}>Confirm Delete</DialogTitle>
+        <DialogContent sx={{ color: "black" }}>
           Are you sure you want to delete this client?
         </DialogContent>
         <DialogActions>

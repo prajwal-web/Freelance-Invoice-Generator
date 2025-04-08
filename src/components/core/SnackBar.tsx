@@ -9,9 +9,9 @@ import { useDispatch } from "react-redux";
 
 export default function CustomizedSnackbars() {
   const dispatch = useDispatch();
-  const msgType = useAppSelector((state) => state.snack.snackToggle.msgType);
+  const msgType = useAppSelector((state) => state.appUI.snackToggle.msgType);
   const { snackBar, snackbarMessage } = useAppSelector(
-    (state: RootState) => state.snack.snackToggle
+    (state: RootState) => state.appUI.snackToggle
   );
 
   const handleClose = (

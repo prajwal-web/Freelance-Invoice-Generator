@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type MsgType = "success" | "error" | "info" | "warning";
 
 export interface AppUIState {
+  [x: string]: any;
   snackToggle: {
     snackBar: boolean;
     snackbarMessage: string;

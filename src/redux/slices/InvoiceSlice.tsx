@@ -45,7 +45,8 @@ export const invoiceSlice = createSlice({
         (inv) => inv.clientId === action.payload.clientId
       );
       if (!existingInvoice) {
-        state.invoice.push(action.payload);
+        // state.invoice.push(action.payload);
+        state.invoice = [...state.invoice, action.payload];
       }
     },
 
@@ -86,10 +87,7 @@ export const invoiceSlice = createSlice({
     },
   },
 });
-
 export const { addInvoice, addService, addPayment } = invoiceSlice.actions;
-
 export const selectInvoices = (state: RootState) => state.invoices;
 export const selectInvoiceList = (state: RootState) => state.invoices.invoice;
-
 export default invoiceSlice.reducer;
