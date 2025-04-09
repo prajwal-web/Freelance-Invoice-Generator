@@ -119,7 +119,7 @@ export default function AddService() {
         {clients.map((client) => (
           <MenuItem
             key={client.email}
-            value={client.email}
+            value={client.id}
             sx={{ color: "black" }}
           >
             {client.email}

@@ -100,13 +100,13 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
                     color: "black",
                   },
                   "& .MuiInput-underline:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                   "& .MuiInput-underline:hover:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                   "& .MuiInput-underline.Mui-focused:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                 }}
                 value={values.id}
@@ -133,13 +133,13 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
                     color: "black",
                   },
                   "& .MuiInput-underline:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                   "& .MuiInput-underline:hover:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                   "& .MuiInput-underline.Mui-focused:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                 }}
                 value={values.name}
@@ -166,13 +166,13 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
                     color: "black",
                   },
                   "& .MuiInput-underline:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                   "& .MuiInput-underline:hover:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                   "& .MuiInput-underline.Mui-focused:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                 }}
                 value={values.email}
@@ -199,13 +199,13 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
                     color: "black",
                   },
                   "& .MuiInput-underline:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                   "& .MuiInput-underline:hover:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                   "& .MuiInput-underline.Mui-focused:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                 }}
                 value={values.phone}
@@ -232,13 +232,13 @@ const BasicModal = ({ onClose }: { onClose: () => void }) => {
                     color: "black",
                   },
                   "& .MuiInput-underline:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                   "& .MuiInput-underline:hover:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                   "& .MuiInput-underline.Mui-focused:before": {
-                    borderBottom: "2px solid black",
+                    borderBottom: "1px solid black",
                   },
                 }}
                 value={values.address}
