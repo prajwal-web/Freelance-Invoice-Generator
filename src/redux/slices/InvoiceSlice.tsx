@@ -45,7 +45,6 @@ export const invoiceSlice = createSlice({
         (inv) => inv.clientId === action.payload.clientId
       );
       if (!existingInvoice) {
-        // state.invoice.push(action.payload);
         state.invoice = [...state.invoice, action.payload];
       }
     },
@@ -58,10 +57,17 @@ export const invoiceSlice = createSlice({
         (inv) => inv.clientId === action.payload.clientId
       );
       if (invoice) {
-        invoice.services = [
-          ...(invoice.services || []),
-          action.payload.service,
-        ];
+        const serviceExists = invoice.services?.some(
+          (service) =>
+            service.description === action.payload.service.description &&
+            service.time === action.payload.service.time
+        );
+        if (!serviceExists) {
+          invoice.services = [
+            ...(invoice.services || []),
+            action.payload.service,
+          ];
+        }
       }
     },
 
@@ -87,6 +93,7 @@ export const invoiceSlice = createSlice({
     },
   },
 });
+
 export const { addInvoice, addService, addPayment } = invoiceSlice.actions;
 export const selectInvoices = (state: RootState) => state.invoices;
 export const selectInvoiceList = (state: RootState) => state.invoices.invoice;

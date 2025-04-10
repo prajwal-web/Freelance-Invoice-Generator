@@ -14,6 +14,7 @@ export default function Addpayment({
   setPaymentAdded,
   setPaymentData,
   selectedClient,
+  servicesList,
 }: any) {
   const dispatch = useDispatch();
 
@@ -25,6 +26,11 @@ export default function Addpayment({
     setPaymentAddedState(false);
     setShowPaymentFields(true);
   };
+
+  const calculatedTotalAmount = servicesList?.reduce(
+    (sum: number, service: any) => sum + Number(service.rate),
+    0
+  );
 
   return (
     <>
@@ -50,7 +56,7 @@ export default function Addpayment({
       {showPaymentFields && !paymentAdded && (
         <Formik
           initialValues={{
-            totalAmount: paymentData?.totalAmount || "",
+            totalAmount: calculatedTotalAmount || "",
             amountPaid: paymentData?.amountPaid || "",
             remAmount: paymentData?.remAmount || "",
             taxRate: paymentData?.taxRate || 18,
@@ -178,6 +184,7 @@ export default function Addpayment({
                     },
                   }}
                   value={values.taxRate}
+                  onChange={handleChange}
                   error={touched.taxRate && Boolean(errors.taxRate)}
                   helperText={
                     touched.taxRate && typeof errors.taxRate === "string"

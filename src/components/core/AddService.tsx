@@ -5,10 +5,9 @@ import Typography from "@mui/material/Typography";
 import { MenuItem, TextField, Tooltip } from "@mui/material";
 import { useAppSelector } from "../../redux/hooks";
 import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import { ServiceSchema } from "../../validation/InvoiceValidationForm";
-import AddPaymentModal from "./AddPayment";
 import {
   addInvoice,
   addPayment,
@@ -22,11 +21,13 @@ import {
   snackbar,
 } from "../../redux/slices/ToggleSlice";
 import { useNavigate } from "react-router";
+import Addpayment from "./AddPayment";
 
 export default function AddService() {
   const navigate = useNavigate();
   const currency = ["₹ ", "$ ", "€"];
   const clients = useAppSelector((state) => state.clients.clients);
+  const invoices = useAppSelector((state) => state.invoices.invoice);
 
   const dispatch = useDispatch();
 
@@ -38,6 +39,30 @@ export default function AddService() {
   const [subTotal, setSubTotal] = useState<number>(0);
   const [taxes, setTaxes] = useState<number>(0);
   const [totalAmount, setTotalAmount] = useState<number>(0);
+
+  useEffect(() => {
+    if (selectedClient) {
+      const clientInvoices = invoices.filter(
+        (invoice) => invoice.clientId === selectedClient
+      );
+
+      const latestInvoice = clientInvoices[0];
+
+      if (latestInvoice) {
+        setServicesList(latestInvoice.services ?? []);
+        const totalServicesAmount = (latestInvoice.services ?? []).reduce(
+          (total, service) => total + service.rate,
+          0
+        );
+        const taxesAmount = totalServicesAmount * 0.18;
+        const total = totalServicesAmount + taxesAmount;
+
+        setSubTotal(totalServicesAmount);
+        setTaxes(taxesAmount);
+        setTotalAmount(total);
+      }
+    }
+  }, [selectedClient, invoices]);
 
   const handleSubmit = () => {
     if (servicesList.length === 0 || !paymentAdded) {
@@ -87,6 +112,31 @@ export default function AddService() {
     dispatch(setSnackbarType("success"));
     dispatch(setSnackbarMessage("Invoice has been successfully created!"));
     dispatch(snackbar(true));
+  };
+
+  const handleAddService = (values: any) => {
+    const newService: Service = {
+      description: values.service,
+      rate: Number(values.rate),
+      currency: values.currency,
+      time: values.date,
+    };
+
+    const serviceExists = servicesList.some(
+      (service) =>
+        service.description === newService.description &&
+        service.time === newService.time
+    );
+
+    if (serviceExists) {
+      dispatch(setSnackbarType("error"));
+      dispatch(setSnackbarMessage("This service already exists."));
+      dispatch(snackbar(true));
+      return;
+    }
+    setServicesList([...servicesList, newService]);
+    setShowServiceFields(false);
+    dispatch(addService({ clientId: selectedClient, service: newService }));
   };
 
   return (
@@ -224,20 +274,7 @@ export default function AddService() {
             date: "",
           }}
           validationSchema={ServiceSchema}
-          onSubmit={(values) => {
-            const newService: Service = {
-              description: values.service,
-              currency: values.currency,
-              time: values.date,
-              rate: Number(values.rate),
-            };
-
-            setServicesList([...servicesList, newService]);
-            setShowServiceFields(false);
-            dispatch(
-              addService({ clientId: selectedClient, service: newService })
-            );
-          }}
+          onSubmit={handleAddService}
         >
           {({ values, errors, touched, handleChange, handleReset }) => (
             <Form>
@@ -350,10 +387,11 @@ export default function AddService() {
       <Typography variant="h5" mt={4} gutterBottom color="black">
         Add Payment
       </Typography>
-      <AddPaymentModal
+      <Addpayment
         setPaymentAdded={setPaymentAdded}
         setPaymentData={setPaymentData}
         selectedClient={selectedClient}
+        servicesList={servicesList}
       />
 
       <Box
@@ -384,30 +422,37 @@ export default function AddService() {
               display: "flex",
               justifyContent: "space-between",
               width: "200px",
+              borderBottom: "1px solid black",
             }}
             color="black"
           >
-            <span>Taxes :</span> <span>{taxes}</span>
+            <span>Taxes (18%):</span> <span>{taxes}</span>
           </Typography>
           <Typography
-            variant="h6"
-            gutterBottom
             sx={{
               display: "flex",
               justifyContent: "space-between",
               width: "200px",
-              borderTop: "1px solid black",
-              paddingTop: "4px",
+              color: "black",
+              fontSize: "24px",
+              fontWeight: 700,
             }}
-            color="black"
           >
-            <span>Sub Total:</span> <span>{totalAmount}</span>
+            <span>Total:</span> <span>{totalAmount}</span>
           </Typography>
         </Box>
-
         <Box>
-          <Button variant="contained" color="success" onClick={handleSubmit}>
-            Submit
+          <Button
+            variant="contained"
+            color="success"
+            sx={{
+              color: "white",
+              width: "150px",
+              padding: "10px 0",
+            }}
+            onClick={handleSubmit}
+          >
+            Submit Invoice
           </Button>
         </Box>
       </Box>
