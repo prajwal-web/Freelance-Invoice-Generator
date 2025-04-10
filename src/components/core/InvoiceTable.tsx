@@ -15,6 +15,7 @@ import {
   Paper,
   Button,
   Typography,
+  Tooltip,
 } from "@mui/material";
 import { useAppSelector } from "../../redux/hooks";
 import { selectInvoices } from "../../redux/slices/InvoiceSlice";
@@ -31,6 +32,7 @@ export default function InvoiceTable() {
   const handleClose = () => {
     dispatch(pdfModal(false));
   };
+
   const invoices = useAppSelector(selectInvoices);
 
   const data = React.useMemo(
@@ -82,7 +84,9 @@ export default function InvoiceTable() {
               dispatch(pdfModal(true));
             }}
           >
-            <FullscreenIcon />
+            <Tooltip title="View Invoice">
+              <FullscreenIcon />
+            </Tooltip>
           </Button>
         ),
       },

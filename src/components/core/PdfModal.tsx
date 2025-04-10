@@ -24,6 +24,8 @@ export default function PdfModal({ handleClose, selectedId }: TPdfModal) {
   const invoice = useAppSelector((state) =>
     state.invoices.invoice.find((inv) => inv.id === selectedId)
   );
+  const client = useAppSelector((state) => state.clients.clients);
+  const clients = client.find((client) => client.id === invoice?.clientId);
 
   return (
     <div>
@@ -35,7 +37,7 @@ export default function PdfModal({ handleClose, selectedId }: TPdfModal) {
       >
         <Box sx={style}>
           <PDFViewer width="600px" height="620px">
-            <InvoicePdf invoiceData={invoice} />
+            <InvoicePdf invoiceData={invoice} clientData={clients} />
           </PDFViewer>
         </Box>
       </Modal>

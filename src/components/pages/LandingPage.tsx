@@ -4,7 +4,7 @@ import AppRouter from "../../router/AppRouter";
 
 const invoiceStyle: React.CSSProperties = {
   fontWeight: "bold",
-  fontSize: "2.5rem",
+  fontSize: "2.2rem",
   color: "black",
   textAlign: "center",
   marginTop: "20px",
@@ -12,7 +12,7 @@ const invoiceStyle: React.CSSProperties = {
 };
 
 const xpertStyle: React.CSSProperties = {
-  fontSize: "1.6rem",
+  fontSize: "1.2rem",
   color: "rgba(56, 36, 143, 1)",
   position: "relative",
   top: "14px",
@@ -20,7 +20,7 @@ const xpertStyle: React.CSSProperties = {
   fontWeight: "600",
 };
 const xStyle: React.CSSProperties = {
-  fontSize: "2.5rem",
+  fontSize: "2.2rem",
   color: "rgba(56, 36, 143, 1)",
   position: "relative",
   top: "10px",

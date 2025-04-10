@@ -30,12 +30,13 @@ import {
 
 function ClientTable() {
   const clients = useAppSelector(selectClients);
+
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = React.useState(false);
   const [selectedClientId, setSelectedClientId] = React.useState<string | null>(
     null
   );
-
+  const clientName = clients.find((client) => client.id === selectedClientId);
   const handleOpenDialog = (id: React.SetStateAction<string | null>) => {
     setSelectedClientId(id);
     setOpenDialog(true);
@@ -169,7 +170,7 @@ function ClientTable() {
 
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogContent sx={{ color: "black" }}>
-          Are you sure you want to delete this client?
+          Are you sure you want to remove {clientName?.name}?
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog} sx={{ color: "#38248f" }}>

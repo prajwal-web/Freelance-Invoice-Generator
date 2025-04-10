@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    marginTop: 10,
+    marginTop: 1,
   },
   textBold: {
     fontFamily: "Helvetica-Bold",
@@ -89,18 +89,19 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica-Bold",
     fontSize: 16,
     marginBottom: 8,
+    marginTop: 10,
   },
   sectionText: {
     fontSize: 12,
     marginBottom: 6,
   },
   footer: {
-    marginTop: 30,
+    marginTop: -20,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
-    borderTop: "2px solid #000",
+    // borderTop: "2px solid #000",
     paddingTop: 20,
     paddingBottom: 20,
   },
@@ -125,28 +126,31 @@ const styles = StyleSheet.create({
     height: "80%",
     objectFit: "contain",
   },
+  footerName: {
+    position: "absolute",
+    right: 10,
+    bottom: 30,
+    fontSize: "1.2rem",
+  },
 });
 
-export const InvoicePdf = ({ invoiceData }: any) => {
+export const InvoicePdf = ({ invoiceData, clientData }: any) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
           <View>
             <Text style={[styles.title, styles.textBold]}>INVOICE</Text>
-            <Text>Invoice {invoiceData.id}</Text>
-          </View>
-          <View style={styles.spaceY}>
-            <Text style={styles.textBold}>Client Name </Text>
-            <Text>Prajwal V</Text>
+            <Text>Invoice #{invoiceData.id}</Text>
           </View>
         </View>
 
         <View style={styles.spaceY}>
           <Text style={[styles.billTo, styles.textBold]}>Bill To:</Text>
-          <Text> Prajwal V</Text>
-          <Text> Bangalore-560073</Text>
-          <Text>7019789368</Text>
+          <Text> {clientData.name}</Text>
+          <Text> {clientData.address}</Text>
+          <Text>{clientData.phone}</Text>
+          <Text>{clientData.email}</Text>
         </View>
 
         <View style={styles.title}>
@@ -158,7 +162,7 @@ export const InvoicePdf = ({ invoiceData }: any) => {
             <Text style={styles.tableHeader}>Service</Text>
             <Text style={styles.tableHeader}>Currency</Text>
             <Text style={styles.tableHeader}>Rate</Text>
-            <Text style={styles.tableHeader}>Time</Text>
+            <Text style={styles.tableHeader}>Date</Text>
           </View>
           {invoiceData.services.map((data: any, index: number) => (
             <View style={styles.tableRow} key={index}>
@@ -210,6 +214,9 @@ export const InvoicePdf = ({ invoiceData }: any) => {
             />
           </View>
           <Text style={styles.footerText}>Thank you for your business!</Text>
+        </View>
+        <View>
+          <Text style={styles.footerName}>{clientData.name}</Text>
         </View>
       </Page>
     </Document>
