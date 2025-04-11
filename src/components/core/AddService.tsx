@@ -45,9 +45,7 @@ export default function AddService() {
       const clientInvoices = invoices.filter(
         (invoice) => invoice.clientId === selectedClient
       );
-
       const latestInvoice = clientInvoices[0];
-
       if (latestInvoice) {
         setServicesList(latestInvoice.services ?? []);
         const totalServicesAmount = (latestInvoice.services ?? []).reduce(
@@ -56,7 +54,6 @@ export default function AddService() {
         );
         const taxesAmount = totalServicesAmount * 0.18;
         const total = totalServicesAmount + taxesAmount;
-
         setSubTotal(totalServicesAmount);
         setTaxes(taxesAmount);
         setTotalAmount(total);
@@ -65,23 +62,30 @@ export default function AddService() {
   }, [selectedClient, invoices]);
 
   const handleSubmit = () => {
-    if (servicesList.length === 0 || !paymentAdded) {
+    if (servicesList.length === 0 && !paymentAdded) {
       dispatch(setSnackbarType("error"));
-      dispatch(
-        setSnackbarMessage(
-          "You must add both services and payment before submitting."
-        )
-      );
+      dispatch(setSnackbarMessage("Both services and payment are required."));
       dispatch(snackbar(true));
       return;
     }
+    if (servicesList.length > 0 && !paymentAdded) {
+      dispatch(setSnackbarType("error"));
+      dispatch(setSnackbarMessage("Payment is required."));
+      dispatch(snackbar(true));
+      return;
+    }
+    if (servicesList.length === 0 && paymentAdded) {
+      dispatch(setSnackbarType("error"));
+      dispatch(setSnackbarMessage("Service is required."));
+      dispatch(snackbar(true));
+      return;
+    }
+
     servicesList.forEach((service) => {
       dispatch(addService({ clientId: selectedClient, service }));
     });
 
-    if (paymentAdded) {
-      dispatch(addPayment({ clientId: selectedClient, payment: paymentData }));
-    }
+    dispatch(addPayment({ clientId: selectedClient, payment: paymentData }));
 
     const totalServicesAmount = servicesList.reduce(
       (total, service) => total + service.rate,
@@ -89,13 +93,16 @@ export default function AddService() {
     );
     const taxesAmount = totalServicesAmount * 0.18;
     const total = totalServicesAmount + taxesAmount;
+    const currency = servicesList.length > 0 ? servicesList[0].currency : paymentData?.currency || "N/A";
 
     const invoiceData = {
       id: `inv${Math.floor(Math.random() * 100)}`,
       clientId: selectedClient,
       totalAmount: total,
       services: servicesList,
-      paymentStatus: paymentData ? paymentData.status : "Unpaid",
+      payment: paymentData,
+      currency: currency, 
+      paymentStatus: paymentData.amountPaid >= paymentData.totalAmount ? "Paid" : "Partially Paid",
     };
 
     dispatch(addInvoice(invoiceData));
@@ -104,8 +111,10 @@ export default function AddService() {
     setTaxes(taxesAmount);
     setTotalAmount(total);
     setPaymentAdded(false);
-    setShowServiceFields(false);
     setPaymentData(null);
+    setServicesList([]);
+    setShowServiceFields(false);
+    setSelectedClient("");
     setTimeout(() => {
       navigate("/");
     }, 2000);
